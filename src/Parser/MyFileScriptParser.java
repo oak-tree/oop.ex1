@@ -1,5 +1,7 @@
 package Parser;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import commands.*;
@@ -10,6 +12,7 @@ public class MyFileScriptParser {
 	
 	
 	private final static String[] SaveWords = {"%","ACTION","FILTER","ORDER",};
+	
 //	private final static int[] 
 	private final static String LINE_STR_ORDER_COMMENT="%";
 	private final static String LINE_STR_FILTER_START="FILTER";
@@ -24,6 +27,10 @@ public class MyFileScriptParser {
 	private final static int LINE_TYPE_OTHER=LINE_TYPE_ORDER_START +1;//saveWords.length
 	
 	private final static int INT_STR_MATCH=0;
+	
+
+	
+
 	
 	/**
 	 * 
@@ -99,8 +106,14 @@ public class MyFileScriptParser {
 	 * in the entered buffer
 	 * 
 	 * @param buffer = script buffer
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 * @throws SecurityException 
+	 * @throws IllegalArgumentException 
+	 * @throws ParsingException 
 	 */
-	private void  scanForBlocksInScript(String buffer) {
+	private void  scanForBlocksInScript(String buffer) throws ParsingException, IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException {
 				
 		   
 		   // use scanner to check for new lines in files. easier this wy 
@@ -163,13 +176,13 @@ public class MyFileScriptParser {
 	
 
 
-	private  boolean createNewObject(int objectType,String buffer){
+	private  boolean createNewObject(int objectType,String buffer) throws ParsingException, IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException{
 		
 		switch (objectType){
 		case LINE_TYPE_ACTION_START:
 		break;
 		case LINE_TYPE_FILTER_START:
-			parseFilterBlock(buffer.split(" "),SaveWords);
+			parseFilter(buffer.split(" "));
 		break;
 		case LINE_TYPE_ORDER_START:
 		break;
@@ -189,7 +202,27 @@ public class MyFileScriptParser {
 	{
 		try {
 		String fileBuffer = fileFunctions.readFileAsString(fileString);
-		  scanForBlocksInScript(fileBuffer);
+		  try {
+			scanForBlocksInScript(fileBuffer);
+		} catch (ParsingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 			 System.out.println("adfa");
 		return null;
 		}
@@ -215,6 +248,28 @@ public class MyFileScriptParser {
 			System.out.println(e.getMessage());
 		}
 	}
-	void parseFilter() {}
+	void parseFilter(String[] buffer) throws ParsingException, IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		//TODO add try and catch
+		System.out.println("parseFilter - begin");		
+		int i;
+		String[] currentWord;
+		String param;
+		for (i=0;i<buffer.length;i++) {
+					
+					currentWord=buffer[i].split("_");
+			if (currentWord[0].length()>=1){
+					if (currentWord.length==1)
+								param=null;
+						else
+							param=currentWord[1];
+						
+				System.out.println(currentWord[0]);		
+						FilterFactory.filterFactory(currentWord[0], param);
+			}
+		}
+		System.out.println("parseFilter - end");	
+		
+	}
+	
 	void parseOrder() {}
 }
