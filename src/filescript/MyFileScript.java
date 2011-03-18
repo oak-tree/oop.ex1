@@ -1,28 +1,26 @@
 package filescript;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import Parser.*;
+
+
 public class MyFileScript {
 
+	private static boolean validation(String[] args){
+		//check here if user enter file name
+		//check if filename is legal? maybe dont need a check here;
+		return true;
+	}
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-		try 
-		{
-			Date d = sdf.parse("1923/03/10");
-			Date d2 = sdf.parse("1923/04/10");
-			
-			System.out.println(d);
-			if (d2.after(d))
-				System.out.println("11111");
-		}
-		catch (Exception e)
-		{
-			return ;
+		// TODO Auto-generated method stub
+		System.out.println("----welcome screen----");
+		if (validation(args)==true) { 
+			MyFileScriptParser scriptParser = new MyFileScriptParser();
+			//scriptParser.parseFile(args[0]);
+			scriptParser.parseFile("testfiles/test.txt");
 		}
 		
-
 	}
 
 }
