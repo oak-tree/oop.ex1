@@ -1,6 +1,6 @@
 package actions;
 
-public class RemoveAction  extends ActionFactory implements action {
+public class RemoveAction implements action {
 
 	public RemoveAction(String param){		
 	}

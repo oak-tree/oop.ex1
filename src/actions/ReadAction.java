@@ -1,6 +1,6 @@
 package actions;
 
-public class ReadAction extends ActionFactory implements action {
+public class ReadAction implements action {
 
 	public ReadAction(String param){
 		

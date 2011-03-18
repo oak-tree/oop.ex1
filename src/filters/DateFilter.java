@@ -1,6 +1,6 @@
 package filters;
 
-public class DateFilter extends FilterFactory implements FilterInterface {
+public class DateFilter implements filter {
 
 	public DateFilter(){
 		//do something 

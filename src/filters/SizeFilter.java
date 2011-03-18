@@ -1,6 +1,6 @@
 package filters;
 
-public class SizeFilter   extends FilterFactory implements FilterInterface {
+public class SizeFilter   implements filter {
 
 public SizeFilter() {
 

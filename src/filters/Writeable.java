@@ -1,6 +1,6 @@
 package filters;
 
-public class Writeable extends FilterFactory implements FilterInterface {
+public class Writeable implements filter {
 
 	@Override
 	public void runCommand() {

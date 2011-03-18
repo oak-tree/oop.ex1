@@ -1,6 +1,6 @@
 package actions;
 
-public class ExecAction  extends ActionFactory implements action {
+public class ExecAction implements action {
 
 	public ExecAction(String param){
 		

@@ -1,6 +1,6 @@
 package actions;
 
-public class PrintAction extends ActionFactory implements action {
+public class PrintAction implements action {
 
 	public PrintAction(String param){
 	

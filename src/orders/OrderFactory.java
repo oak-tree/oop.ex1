@@ -55,13 +55,13 @@ public abstract  class OrderFactory  {
 	     * @throws InvalidFilterParameterException if the filter parameters ware wrong
 	     * @throws UnsupportedFilterException if the filter name is not defined
 	     */
-	    public static OrderFactory orderFactory(String order , String param) 
+	    public static order orderFactory(String order , String param) 
 	    throws ParsingException, IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException {
 	        if (!ORDER_TABLE.containsKey(order)) {
 	           //TODO //throw new UnsupportedFilterException();
 	        }
 	    //TODO add try and catch and throw some exepction    
-	            return (OrderFactory) (ORDER_TABLE.get(order).
+	            return (order) (ORDER_TABLE.get(order).
 	                    getConstructors()[0].newInstance(param));
 	        	       
 	       

@@ -60,13 +60,13 @@ public abstract  class FilterFactory {
 	     * @throws InvalidFilterParameterException if the filter parameters ware wrong
 	     * @throws UnsupportedFilterException if the filter name is not defined
 	     */
-	    public static FilterFactory filterFactory(String filter , String param) 
+	    public static filter filterFactory(String filter , String param) 
 	    throws ParsingException, IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException {
 	        if (!FILTER_TABLE.containsKey(filter)) {
 	           //TODO //throw new UnsupportedFilterException();
 	        }
 	    //TODO add try and catch and throw some exepction    
-	            return (FilterFactory) (FILTER_TABLE.get(filter).
+	            return (filter) (FILTER_TABLE.get(filter).
 	                    getConstructors()[0].newInstance(param));
 	        	       
 	       

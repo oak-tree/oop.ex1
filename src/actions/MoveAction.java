@@ -1,6 +1,6 @@
 package actions;
 
-public class MoveAction extends ActionFactory implements action {
+public class MoveAction implements action {
 
 	public MoveAction(String param) {
 		

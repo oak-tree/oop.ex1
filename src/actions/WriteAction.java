@@ -1,6 +1,6 @@
 package actions;
 
-public class WriteAction extends ActionFactory implements action {
+public class WriteAction  implements action {
 
 	public WriteAction(String param){
 		

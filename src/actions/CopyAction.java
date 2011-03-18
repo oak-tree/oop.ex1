@@ -1,6 +1,6 @@
 package actions;
 
-public class CopyAction extends ActionFactory implements action {
+public class CopyAction implements action {
 
 	public CopyAction(String Param){
 		
