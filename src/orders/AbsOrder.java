@@ -1,6 +1,6 @@
 package orders;
 
-public class AbsOrder implements order {
+public class AbsOrder extends OrderFactory implements order {
 
 	@Override
 	public void runCommand() {

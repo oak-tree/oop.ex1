@@ -1,6 +1,6 @@
 package orders;
 
-public class FileOrder implements order {
+public class FileOrder extends OrderFactory implements order {
 
 	@Override
 	public void runCommand() {
