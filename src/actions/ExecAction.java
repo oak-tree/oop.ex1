@@ -1,7 +1,10 @@
 package actions;
 
-public class ExecAction implements action {
+public class ExecAction  extends ActionFactory implements action {
 
+	public ExecAction(String param){
+		
+	}
 	@Override
 	public void runCommand() {
 		// TODO Auto-generated method stub
