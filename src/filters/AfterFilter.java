@@ -1,6 +1,6 @@
 package filters;
 
-public class AfterFilter  extends FilterFactory implements filter {
+public class AfterFilter  extends FilterFactory implements FilterInterface {
 	private  String _param;
 	
 
