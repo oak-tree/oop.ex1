@@ -1,7 +1,7 @@
 package Parser;
+import myFileScriptExceptions.*;
 import commands.*;
 import filters.*;
-import Exceptions.*;
 public class MyFileScriptParser {
 	public Command[] parseFile(String fileString)
 	{

@@ -1,11 +1,11 @@
 package filters;
 
-public class AfterFilter implements filter {
+public class AfterFilter extends DateFilter {
+	public AfterFilter(String params)
 
-	@Override
-	public void runCommand() {
-		// TODO Auto-generated method stub
-
+	{
+		super(params);
+		isBefore = false;
 	}
 
 }
