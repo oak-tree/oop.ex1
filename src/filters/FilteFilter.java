@@ -1,6 +1,6 @@
 package filters;
 
-public class FilteFilter implements filter {
+public class FilteFilter implements FilterInterface {
 
 	@Override
 	public void runCommand() {
