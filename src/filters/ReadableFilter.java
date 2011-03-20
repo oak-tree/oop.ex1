@@ -1,11 +1,17 @@
 package filters;
 
-public class ReadableFilter implements filter {
+import java.io.File;
 
-	@Override
-	public void runCommand() {
-		// TODO Auto-generated method stub
+public class ReadableFilter extends PermissionsFilter {
 
+	public ReadableFilter(String param)
+	{
+		super(param);
 	}
+	public boolean hasPermission(File f)
+	{
+		return f.canRead();
+	}
+
 
 }

@@ -33,7 +33,7 @@ public abstract  class FilterFactory {
 	                put("READABLE",
 	                		ReadableFilter.class);
 	                put("WRITEABLE",
-	                		Writeable.class);
+	                		WriteableFilter.class);
 	                put("EXECUTABLE",ExecutableFilter.class);
 	                
 	              

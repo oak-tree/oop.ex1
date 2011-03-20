@@ -1,14 +1,10 @@
 package filters;
 
-public class SizeFilter   implements filter {
+public class SizeFilter   extends filter {
 
-public SizeFilter() {
+	public SizeFilter() {
 
-}
+	}
 
-@Override
-public void runCommand() {
-	// TODO Auto-generated method stub
-	
-}
+
 }

@@ -2,6 +2,12 @@ package orders;
 
 import commands.Command;
 
-public interface order extends Command {
+public abstract class order implements Command {
+
+	public String[] runCommand(String[] filenames) {
+		return null;
+		// TODO Auto-generated method stub
+
+	}
 
 }

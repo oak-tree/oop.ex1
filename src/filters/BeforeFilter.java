@@ -4,8 +4,8 @@ public class BeforeFilter extends DateFilter  {
 
 	public BeforeFilter(String params)
 	{
-		super();
-		//isBefore = true;
+		super(params);
+		isBefore = true;
 	}
 
 }

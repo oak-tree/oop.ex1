@@ -1,14 +1,14 @@
 package actions;
 
-public class PrintAction implements action {
+public class PrintAction extends action {
 
 	public PrintAction(String param){
 	
 	}
-	@Override
-	public void runCommand() {
+
+	public String[] runCommand(String[] filenames) {
+		return null;
 		// TODO Auto-generated method stub
 
 	}
-
 }

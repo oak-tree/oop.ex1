@@ -1,11 +1,6 @@
 package orders;
 
-public class ModOrder  implements order {
+public class ModOrder  extends order {
 
-	@Override
-	public void runCommand() {
-		// TODO Auto-generated method stub
-
-	}
 
 }

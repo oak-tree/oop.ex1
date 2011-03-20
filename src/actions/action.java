@@ -2,6 +2,10 @@ package actions;
 
 import commands.Command;
 
-public interface action extends Command {
+public abstract class action implements Command {
+	public String[] runCommand(String[] filenames) {
+		return null;
+		// TODO Auto-generated method stub
 
+	}
 }

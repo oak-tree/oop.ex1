@@ -2,6 +2,14 @@ package filters;
 import commands.*;
 
 
-public interface filter extends  Command {
+public abstract class filter implements  Command {
+	
+	public String[] runCommand(String[] filenames) {
+		return null;
+		// TODO Auto-generated method stub
+
+	}
+	
+	
 	
 }

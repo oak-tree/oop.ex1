@@ -1,13 +1,8 @@
 package actions;
 
-public class RemoveAction implements action {
+public class RemoveAction extends action {
 
 	public RemoveAction(String param){		
-	}
-	@Override
-	public void runCommand() {
-		// TODO Auto-generated method stub
-
 	}
 
 }

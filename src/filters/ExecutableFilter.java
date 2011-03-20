@@ -1,11 +1,15 @@
 package filters;
 
-public class ExecutableFilter implements filter {
+import java.io.File;
 
-	@Override
-	public void runCommand() {
-		// TODO Auto-generated method stub
-
+public class ExecutableFilter extends PermissionsFilter {
+	public ExecutableFilter(String param)
+	{
+		super(param);
+	}
+	public boolean hasPermission(File f)
+	{
+		return f.canExecute();
 	}
 
 }

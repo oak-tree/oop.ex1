@@ -1,14 +1,10 @@
 package actions;
 
-public class CopyAction implements action {
+public class CopyAction extends action {
 
 	public CopyAction(String Param){
 		
 	}
-	@Override
-	public void runCommand() {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 }

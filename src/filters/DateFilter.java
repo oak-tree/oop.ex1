@@ -3,14 +3,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.ParseException;
 import myFileScriptExceptions.*;
-public class DateFilter implements filter {
+public class DateFilter extends filter {
 
-<<<<<<< HEAD
-public class DateFilter implements filter {
-
-	public DateFilter(){
-		//do something 
-=======
 	private Date _comparisonDate;
 	protected boolean isBefore;
 	
@@ -25,12 +19,7 @@ public class DateFilter implements filter {
 		{
 			throw new ParsingException(e.getMessage());
 		}
->>>>>>> a33ecd137e2e66ddcaf52fb56278767e3faabd11
 	}
-	@Override
-	public void runCommand() {
-		
 
-	}
 
 }

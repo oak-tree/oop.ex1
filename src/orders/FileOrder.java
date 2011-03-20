@@ -1,11 +1,6 @@
 package orders;
 
-public class FileOrder  implements order {
+public class FileOrder  extends order {
 
-	@Override
-	public void runCommand() {
-		// TODO Auto-generated method stub
-
-	}
 
 }
