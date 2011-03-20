@@ -1,19 +1,19 @@
 package Parser;
 
 // dont have this file right now import myFileScriptExceptions.*;
-import Exceptions.*;
-
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-
 import java.util.Scanner;
 
+import orders.OrderFactory;
+import myFileScriptExceptions.ParsingException;
 import actions.ActionFactory;
 
-import orders.OrderFactory;
+import commands.Command;
 
-import commands.*;
 import filters.*;
+//import filters.FilterFactory;
+//import filters.GreaterFilter;
 
 public class MyFileScriptParser {
 
@@ -170,9 +170,10 @@ public class MyFileScriptParser {
 	
 
 	public Command[] parseFile(String fileString) {
-		try {
-			String fileBuffer = fileFunctions.readFileAsString(fileString);
+		
 			try {
+				String fileBuffer ="FILTER GREATER_";// fileFunctions.readFileAsString(fileString);
+			
 				scanForBlocksInScript(fileBuffer);
 			} catch (ParsingException e) {
 				// TODO Auto-generated catch block
@@ -192,16 +193,15 @@ public class MyFileScriptParser {
 			} catch (InvocationTargetException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} finally {
+	
 			}
 			System.out.println("adfa");
 			return null;
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-			return null;
-		}
+		} 
+	
 
-	}
-
+	
 	void parseCommanrd() {
 	}
 
