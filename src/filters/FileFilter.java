@@ -1,6 +1,14 @@
 package filters;
 
-public class FileFilter {
+import java.io.File;
+
+public class FileFilter extends filter {
+	
+	String _pattern;
+	FileFilter(String param)
+	{
+		_pattern = param;
+	}
 	private boolean patternSearch(String text, String pattern)
 	{
 	    // split by the * symbol
@@ -23,6 +31,11 @@ public class FileFilter {
 	        
 	    return true;
 	 }
+	
+	protected boolean isFileFilterd(File f)
+	{
+		return patternSearch(f.getName(), _pattern);
+	}
 
 
 }
