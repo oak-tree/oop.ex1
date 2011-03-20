@@ -20,4 +20,9 @@ public abstract class PermissionsFilter extends filter {
 	}
 	public abstract boolean hasPermission(File f);
 
+	
+	protected boolean isFileFilterd(File f)
+	{
+		return hasPermission(f) == _isPermisiionAllowed;
+	}
 }

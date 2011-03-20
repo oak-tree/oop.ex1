@@ -1,12 +1,12 @@
 package filters;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.ParseException;
 import myFileScriptExceptions.*;
-public class DateFilter extends filter {
+public abstract class DateFilter extends filter {
 
 	private Date _comparisonDate;
-	protected boolean isBefore;
 	
 	public DateFilter(String params)
 	{
@@ -19,6 +19,13 @@ public class DateFilter extends filter {
 		{
 			throw new ParsingException(e.getMessage());
 		}
+	}
+	
+	abstract protected boolean isDateValid(Date fileDate, Date ComparisonDate);
+	
+	protected boolean isFileFilterd(File f)
+	{
+		return isDateValid(_comparisonDate, new Date(f.lastModified()));
 	}
 
 

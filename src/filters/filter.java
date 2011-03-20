@@ -1,6 +1,6 @@
 package filters;
 import commands.*;
-
+import java.io.File;
 
 public abstract class filter implements  Command {
 	
@@ -9,6 +9,8 @@ public abstract class filter implements  Command {
 		// TODO Auto-generated method stub
 
 	}
+	
+	abstract protected boolean isFileFilterd(File f);
 	
 	
 	

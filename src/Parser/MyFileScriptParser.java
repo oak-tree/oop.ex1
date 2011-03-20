@@ -240,7 +240,7 @@ public class MyFileScriptParser {
 		
 		
 		try {
-			new GreaterFilter();
+			new GreaterFilter("1234");
 		} catch (ParsingException e) {
 			System.out.println(e.getMessage());
 		}
