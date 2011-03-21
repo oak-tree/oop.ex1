@@ -3,15 +3,20 @@ package Parser;
 // dont have this file right now import myFileScriptExceptions.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import orders.OrderFactory;
+import orders.order;
 import myFileScriptExceptions.ParsingException;
+import actions.Action;
 import actions.ActionFactory;
+import actions.SectionAction;
 
 import commands.Command;
 
 import filters.*;
+import java.util.List;
 //import filters.FilterFactory;
 //import filters.GreaterFilter;
 
@@ -91,6 +96,9 @@ public class MyFileScriptParser {
 			InstantiationException, IllegalAccessException,
 			InvocationTargetException {
 
+		
+		List<Command> commands = new ArrayList<Command>();
+		List<Command> sectionCmd = new ArrayList<Command>();
 		// use scanner to check for new lines in files. easier this wy
 		Scanner scn = new Scanner(buffer);
 		// make sure scanner check for new line and not new words
@@ -115,18 +123,32 @@ public class MyFileScriptParser {
 				// this means we still at the same block
 				if ((currentLineType >= SaveWords.length)) {
 					// add this line to the block
-					currentBlockBuffer = currentBlockBuffer + " " + currentLine;
+	
+					
+					//	sectionCmd.add(beginCreateNewSection(currentBlockType,currentLine));
+					
+					
+					currentBlockBuffer = currentBlockBuffer + "\n" + currentLine;
+					
 				} else {
-
+		
+						
 					// its time to create new block
 
 					// so now we do
 					// 1.try to create last block
 					// 2.start collecting info on the new block
 
-					createNewObject(currentBlockType, currentBlockBuffer);
+					
+					//create the section
+					commands.add(createNewSecton(currentBlockType,currentBlockBuffer));
+
+					
+					//	createNewObject(currentBlockType, currentBlockBuffer);
+				
 					currentBlockBuffer = ""; // empty last block
 					currentBlockType = currentLineType;
+					sectionCmd.clear();
 
 				}
 
@@ -134,116 +156,107 @@ public class MyFileScriptParser {
 		}// while
 
 		// create last block object
-		createNewObject(currentBlockType, currentBlockBuffer);
+		createNewSecton(currentBlockType, currentBlockBuffer);
 
 		System.out.println();
 	}
-
-	private boolean createNewObject(int objectType, String buffer)
-			throws ParsingException, IllegalArgumentException,
-			SecurityException, InstantiationException, IllegalAccessException,
-			InvocationTargetException {
-
-		//TODO maybe the parser blow, e.g"parseFilter" can be here 
-		//TODO and not in different method
-		switch (objectType) {
-		case LINE_TYPE_ACTION_START:
-			parseAction(buffer.split(" "));
-			break;
-		case LINE_TYPE_FILTER_START:
-			parseFilter(buffer.split(" "));
-			break;
-		case LINE_TYPE_ORDER_START:
-			
-			parseOrder(buffer.split(" "));
-			break;
-		default:
-		}
-
-		// let the user know what are the results
-
-		System.out.println("new buffer  - type " + SaveWords[objectType] + " "
-				+ objectType);
-		System.out.println(buffer);
-		return true;
-	}
 	
 
-	public Command[] parseFile(String fileString) {
-		
-			try {
-				String fileBuffer ="FILTER GREATER_";// fileFunctions.readFileAsString(fileString);
-			
-				scanForBlocksInScript(fileBuffer);
-			} catch (ParsingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InstantiationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} finally {
+	/**
+	 * Separates command and param by the char "_"
+	 * 
+	 * @param buffer
+	 * @return array of two string. 
+	 * 			[0] - holds command name
+	 * 			[1] - param value. null if no param.
+	 * @exception
+	 * 		raise exepction if more than 1 parameter exists
+	 */
 	
-			}
-			System.out.println("adfa");
-			return null;
-		} 
-	
-
-	
-	void parseCommanrd() {
-	}
-
-
-	
-	
-	//TODO note: the 3 methods parse* are very similar maybe its better to combine them together
-	//TODO this fuction will return array of commands
-	void parseAction(String[] buffer) throws ParsingException, IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException {
-
-		// TODO add try and catch
-		System.out.println("parseAction - begin");
-		int i;
+	//TODO raise exepction
+	// does this filter has a param?
+	private String[] getObjectParam(String buffer){
 		String[] currentWord;
-		String param;
-		for (i = 0; i < buffer.length; i++) {
+		
+		currentWord = buffer.split("_");
+		if (currentWord.length >2) {
+			//todo throw expection 
+			System.out.println("too much data");
+			return null; }
+		else
+		{
+		
+			String[] returnValue=new String[2];
+		
+		
+			returnValue[0]=currentWord[0];
+			if (currentWord.length == 1)
+				returnValue[1]=null;
+			else
+				returnValue[1]= currentWord[1];
+			
+			
+			return returnValue;
+		}
+	
+	}
+ 
+	/**
+	 * creates new section according to section type
+	 * @param sectionType  integer. can hold 3 kinds of section
+	 * @param buffer string. holds section data
+	 * @return Command
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 * @throws SecurityException 
+	 * @throws IllegalArgumentException 
+	 * @throws ParsingException 
+	 */
+	private Command createNewSecton(int sectionType,String buffer) throws ParsingException, IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException{
+		switch (sectionType) {
+		 
+		case  LINE_TYPE_ACTION_START:
+			return new SectionAction(parseAction(buffer));
+		case  LINE_TYPE_FILTER_START:
+			return new AndFilter(parseFilter(buffer));
+		case  LINE_TYPE_ORDER_START:
+			return parseOrder(buffer);
+		default: 
+			return null;
+			//TODO "error msg"
+		}
 
-			currentWord = buffer[i].split("_");
-			//check if this word or new line 
-			if (currentWord[0].length() >= 1) {
+		
+	
+		
+	}
+	
+	
 
-				// does this filter has a param?
-				if (currentWord.length == 1)
-					param = null;
-				else
-					param = currentWord[1];
+	
+
+
+	private List<Action> parseAction(String buffer) throws ParsingException, IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		System.out.println("Filter - Begin");
+		Scanner scnLine = new Scanner( buffer);
+		String currentWord;
+		List<Action> filterList = new ArrayList<Action>();
+		String[] params;
+
+
+			while (scnLine.hasNext()) {
+					currentWord=scnLine.next();
+						System.out.println(currentWord);
+						params=getObjectParam(currentWord);
+						filterList.add(ActionFactory.actionFactory(params[0], params[1]));
+
+				}
 				
-				System.out.println(currentWord[0]);
-				//try to create this filter from Factory
-				ActionFactory.actionFactory(currentWord[0], param);
-			}
-		}
-		System.out.println("parseAction - end");
-
+				
+			return filterList;
 
 		
-		
-		try {
-			new GreaterFilter("1234");
-		} catch (ParsingException e) {
-			System.out.println(e.getMessage());
-		}
 	}
 /**this function parse filter block parameters and creates
  * for each one of them the right object
@@ -259,66 +272,96 @@ public class MyFileScriptParser {
  */
 	//TODO this function will return an array of commands
 	//TOOD so the method "parseFile" will be able to collect it 
-void parseFilter(String[] buffer) throws ParsingException,
+private List<filter>  parseFilter(String buffer) throws ParsingException,
 			IllegalArgumentException, SecurityException,
 			InstantiationException, IllegalAccessException,
 			InvocationTargetException {
 		
+				System.out.println("Filter - Begin");
+				Scanner scnLine = new Scanner( buffer);
+				String currentLine;
+				List<filter> filterList = new ArrayList<filter>();
+				String[] params;
+
+
+					while (scnLine.hasNext()) {
+							currentLine=scnLine.next();
+								System.out.println(currentLine);
+								filterList.add(new OrFilter(parseFilterLine(currentLine)));
+						}
+						System.out.println("Filter - end");
+						
+	//TODO think on emtpy list. should take care of this as well 
+						
+						return filterList;
+	
+	
+	
 	//TODO if buffer is empty do something 
 	
-	
-		// TODO add try and catch
-		System.out.println("parseFilter - begin");
-		int i;
-		String[] currentWord;
-		String param;
-		for (i = 0; i < buffer.length; i++) {
-
-			currentWord = buffer[i].split("_");
-			//check if this word or new line 
-			if (currentWord[0].length() >= 1) {
-
-				// does this filter has a param?
-				if (currentWord.length == 1)
-					param = null;
-				else
-					param = currentWord[1];
-				
-				System.out.println(currentWord[0]);
-				//try to create this filter from Factory
-				FilterFactory.filterFactory(currentWord[0], param);
-			}
-		}
-		System.out.println("parseFilter - end");
 
 	}
+
+private List<filter> parseFilterLine(String Line) throws ParsingException, IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException{
+	
+	List<filter> filterList = new ArrayList<filter>();
+	String[] wordsInLine=Line.split(" ");
+	String[] word;
+	String[] params;
+	int i;
+	for (i = 0; i < wordsInLine.length; i++) {
+	
+		params=getObjectParam(wordsInLine[i]);
+		filterList.add(FilterFactory.filterFactory(params[0], params[1]));
+	
+	
+	} //for
+	return filterList;
+}
+
+
 	//TODO its allmost as same as the method above . so maybe its better to combine them
-	void parseOrder(String[] buffer) throws ParsingException, IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException {
+	private order parseOrder(String buffer) throws ParsingException, IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException {
 	
 		//TODO if buffer is empty do ABS order
 		// TODO add try and catch
+		
 		System.out.println("parseOrder - begin");
 		int i;
-		String[] currentWord;
-		String param;
-		for (i = 0; i < buffer.length; i++) {
-
-			currentWord = buffer[i].split("_");
-			//check if this word or new line 
-			if (currentWord[0].length() >= 1) {
-
-				// does this filter has a param?
-				if (currentWord.length == 1)
-					param = null;
-				else
-					param = currentWord[1];
-				
-				System.out.println(currentWord[0]);
-				//try to create this filter from Factory
-				OrderFactory.orderFactory(currentWord[0], param);
-			}
+		String[] orderType;
+		//orderType=buffer.split("(\n)(\s)");
+		
+		//this regex always gives back an empty string in orderType[0]
+		orderType=buffer.split("\\s+");
+		
+		for (i=0;i<orderType.length;i++)
+		{
+			System.out.println(orderType[i]);
 		}
-		System.out.println("parseOrder - end");
-
+		
+		if ((orderType==null) || (orderType.length==1))
+			return OrderFactory.orderFactory("ABS");
+		else
+				if (orderType.length>2) 
+						throw new ParsingException ("bla");
+					else
+			
+		
+			//	System.out.println(orderType[0]);
+				//try to create this filter from Factory
+				System.out.println("parseOrder - end");
+				return OrderFactory.orderFactory(orderType[1]);
+				
+			
+			
 	}
+
+
+
+public Command[] parseFile(String fileString) throws ParsingException, IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, IOException {
+		String fileBuffer =fileFunctions.readFileAsString(fileString);
+		scanForBlocksInScript(fileBuffer);
+
+		return null;
+	} 
 }
