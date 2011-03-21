@@ -25,14 +25,19 @@ public class FileManager {
 		reset();
 	}
 	
-	public void ChangeComparator(Comparator newCom)
+	
+	// sort the
+	public void ChangeComparator(Comparator<String> newCom)
 	{
-		_tree = new TreeSet<String> (newCom);
+		
+		TreeSet <String> newTree = new TreeSet<String> (newCom);
 		for (Iterator <String>i1 = _tree.iterator(); i1.hasNext() ;)
 		{
 			String st = i1.next();
-			_tree.add(st);
+			newTree.add(st);
 		}
+		
+		_tree = newTree;
 	}
 
 }
