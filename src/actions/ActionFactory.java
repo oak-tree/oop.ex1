@@ -6,7 +6,7 @@ package actions;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
-import Exceptions.ParsingException;
+import myFileScriptExceptions.*;
 /**
  * this class is the factory of actions. it uses maphash to check for saved
  * words and create the object related to them
