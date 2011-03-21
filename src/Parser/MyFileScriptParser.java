@@ -126,6 +126,7 @@ public class MyFileScriptParser {
 		boolean hasEnoughFilters=false;
 		boolean hasEnoughActions=false;
 		Command currentCmd;
+		int lastBlock=0;
 		
 		while (scn.hasNext()) {
 			currentLine = scn.next();
@@ -137,30 +138,41 @@ public class MyFileScriptParser {
 				// this means we still at the same block
 				if ((currentLineType >= SaveWords.length)) {
 					// add this line to the block
-					currentBlockBuffer = currentBlockBuffer + "\n" + currentLine;
+					if (currentBlockBuffer=="")
+						currentBlockBuffer = currentLine;
+					else
+						currentBlockBuffer = currentBlockBuffer + "\n\r" + currentLine;
 					
 				} else {
 					
-					// its time to create new block
-					// so now we do
-					// 1.try to create last block
-					// 2.start collecting info on the new block
-	
+					/* its time to create new block
+					 * so now we do
+					 * 1.try to create last block
+					 * 2.start collecting info on the new block
+					 */
+					
 					if (currentBlockType==LINE_TYPE_FILTER_START)
 						hasEnoughFilters=true;//has atleast one filter
 			
 			currentCmd= (createNewSecton(currentBlockType,currentBlockBuffer));
 					commands.add(currentCmd);
 							
+					/* if current block is action do two things
+					 * 1. check if this block empty
+					 * 2. check if before this block there was Filter Block
+					 */
 					
-					if (currentBlockType==LINE_TYPE_ACTION_START)
-						 if (((SectionAction) currentCmd).isEmpty())
-							throw new ParsingException("action block must have atleast one action inside");
+					if (currentBlockType==LINE_TYPE_ACTION_START) {
+						 if ((((SectionAction) currentCmd).isEmpty()) || (lastBlock!=LINE_TYPE_FILTER_START))
+							throw new ParsingException("action block must have" +
+									" atleast one action inside");
 							//action block must have atleast one action inside
-					
+					}
+						 
 						
 					
-					// empty last block
+					// empty and save last block
+					lastBlock= currentBlockType;
 					currentBlockBuffer = ""; 
 					currentBlockType = currentLineType;
 			
@@ -173,7 +185,7 @@ public class MyFileScriptParser {
 		// create last block object
 		commands.add(createNewSecton(currentBlockType, currentBlockBuffer));
 
-		if ((hasEnoughFilters) && (hasEnoughActions))	
+		if (hasEnoughFilters) 	
 			return commands;
 		else
 			throw new ParsingException ("bla"); //one filter must be script
