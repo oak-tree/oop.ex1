@@ -5,7 +5,7 @@ package orders;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
-import Exceptions.ParsingException;
+import myFileScriptExceptions.*;
 /**
  * this class is the factory of orders. it uses maphash to check for saved
  * words and create the object related to them
@@ -22,6 +22,8 @@ public abstract  class OrderFactory  {
 
 	        {
 	            try {
+	            	put("",AbsOrder.class);//empty order act same as ABS
+	            			
 	                put("ABS",
 	                		AbsOrder.class);
 	                put("FILE",
@@ -55,14 +57,14 @@ public abstract  class OrderFactory  {
 	     * @throws InvalidFilterParameterException if the filter parameters ware wrong
 	     * @throws UnsupportedFilterException if the filter name is not defined
 	     */
-	    public static order orderFactory(String order , String param) 
+	    public static order orderFactory(String order) 
 	    throws ParsingException, IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException {
 	        if (!ORDER_TABLE.containsKey(order)) {
 	           //TODO //throw new UnsupportedFilterException();
 	        }
 	    //TODO add try and catch and throw some exepction    
 	            return (order) (ORDER_TABLE.get(order).
-	                    getConstructors()[0].newInstance(param));
+	                    getConstructors()[0].newInstance());
 	        	       
 	       
 	    
