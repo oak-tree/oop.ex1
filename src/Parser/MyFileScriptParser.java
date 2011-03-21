@@ -117,7 +117,11 @@ public class MyFileScriptParser {
 				SaveWords);
 		int currentBlockType = currentLineType;
 		String currentBlockBuffer = ""; // Collect block data
-
+		
+		
+		
+		//oop conditions
+		boolean hasEnoughFilters=false;
 		
 		while (scn.hasNext()) {
 			currentLine = scn.next();
@@ -129,12 +133,17 @@ public class MyFileScriptParser {
 				if ((currentLineType >= SaveWords.length)) {
 					// add this line to the block
 					currentBlockBuffer = currentBlockBuffer + "\n" + currentLine;
-
+					
 				} else {
 					// its time to create new block
 					// so now we do
 					// 1.try to create last block
 					// 2.start collecting info on the new block
+					
+					
+					if (currentBlockType==LINE_TYPE_FILTER_START)
+						hasEnoughFilters=true;//has atleast one filter
+					
 					commands.add(createNewSecton(currentBlockType,currentBlockBuffer));
 					
 					// empty last block
@@ -150,7 +159,10 @@ public class MyFileScriptParser {
 		// create last block object
 		commands.add(createNewSecton(currentBlockType, currentBlockBuffer));
 
-		return commands;
+		if (hasEnoughFilters)
+			return commands;
+		else
+			throw new ParsingException ("bla"); //one filter must be script
 	}
 
 
