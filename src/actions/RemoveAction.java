@@ -1,8 +1,15 @@
 package actions;
 
-public class RemoveAction extends action {
+import java.io.File;
 
-	public RemoveAction(String param){		
+public class RemoveAction extends Action {
+
+	public RemoveAction(String param) {
+	
 	}
 
+	protected void performAction(File f)
+	{
+		f.delete();
+	}
 }
