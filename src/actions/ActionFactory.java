@@ -65,13 +65,13 @@ public abstract  class ActionFactory {
 	     * @throws InvalidFilterParameterException if the filter parameters ware wrong
 	     * @throws UnsupportedFilterException if the filter name is not defined
 	     */
-	    public static action actionFactory(String action , String param) 
+	    public static Action actionFactory(String action , String param) 
 	    throws ParsingException, IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException {
 	        if (!ACTION_TABLE.containsKey(action)) {
 	           //TODO //throw new UnsupportedFilterException();
 	        }
 	    //TODO add try and catch and throw some exepction    
-	            return (action) (ACTION_TABLE.get(action).
+	            return (Action) (ACTION_TABLE.get(action).
 	                    getConstructors()[0].newInstance(param));
 	        	       
 	       
