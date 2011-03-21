@@ -1,11 +1,14 @@
 package filters;
 
-public class FilteFilter implements filter {
+import java.io.File;
+
+public class FilteFilter extends filter {
 
 	@Override
-	public void runCommand() {
+	protected boolean isFileFilterd(File f) {
 		// TODO Auto-generated method stub
-
+		return false;
 	}
 
+	
 }
