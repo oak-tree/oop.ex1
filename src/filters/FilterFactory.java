@@ -3,7 +3,7 @@ package filters;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
-import Exceptions.ParsingException;
+import myFileScriptExceptions.*;
 /**
  * this class is the factory of filters. it uses maphash to check for saved
  * words and create the object related to them

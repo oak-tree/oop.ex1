@@ -2,6 +2,10 @@ package filescript;
 import Parser.*;
 
 import java.io.FilePermission;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+
+import myFileScriptExceptions.ParsingException;
 public class MyFileScript {
 
 	private static boolean validation(String[] args){
@@ -18,14 +22,37 @@ public class MyFileScript {
 		
 		//FilePermission fp = new FilePermission("C:\\Users\\ami\\My Documents\\bla.txt","");
 	//	System.out.println(wildCardMatch("amiamiami", "ami*ami"));
-		/*
+		
 		System.out.println("----welcome screen----");
-		if (validation(args)==true) { 
+	//	if (validation(args)==true) { 
 			MyFileScriptParser scriptParser = new MyFileScriptParser();
 			//scriptParser.parseFile(args[0]);
-			scriptParser.parseFile("testfiles/test.txt");
-		}
-		*/
+			try {
+				scriptParser.parseFile("testfiles/test.txt");
+			} catch (ParsingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		//}
+		
 	}
 
 }

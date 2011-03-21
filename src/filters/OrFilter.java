@@ -2,10 +2,12 @@ package filters;
 
 import java.util.List;
 
+import commands.Command;
+
 public class OrFilter extends BinaryOperatorFilter {
 
 
-	public OrFilter(List <filter> filterList)
+	public OrFilter(List<filter> filterList)
 	{
 		super(filterList);
 	}
