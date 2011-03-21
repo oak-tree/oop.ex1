@@ -8,7 +8,7 @@ import java.util.List;
 public class SectionAction extends Action {
 
 	List <Action> _actionsList;
-	SectionAction(List <Action> l)
+	public SectionAction(List <Action> l)
 	{
 		_actionsList = l;
 	}
