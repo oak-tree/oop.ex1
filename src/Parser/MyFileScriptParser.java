@@ -17,6 +17,8 @@ import commands.Command;
 
 import filters.*;
 import java.util.List;
+
+import java.util.regex.*;
 //import filters.FilterFactory;
 //import filters.GreaterFilter;
 
@@ -34,7 +36,7 @@ public class MyFileScriptParser {
 
 	private final static int INT_STR_MATCH = 0;
 
-	
+	private boolean allowMoreCommand=true;
 	
 	/**
 	 * gets first word in line - used for checking what kind of section is it
@@ -122,29 +124,41 @@ public class MyFileScriptParser {
 		
 		//oop conditions
 		boolean hasEnoughFilters=false;
+		boolean hasEnoughActions=false;
+		Command currentCmd;
 		
 		while (scn.hasNext()) {
 			currentLine = scn.next();
 			currentLineType = whatKindOfLineIsIt(getFirstWord(currentLine),
 					SaveWords);
 			if (currentLineType != LINE_TYPE_COMMENT) {
-
+				if (!allowMoreCommand)
+					throw new ParsingException("dont allow more commands");
 				// this means we still at the same block
 				if ((currentLineType >= SaveWords.length)) {
 					// add this line to the block
 					currentBlockBuffer = currentBlockBuffer + "\n" + currentLine;
 					
 				} else {
+					
 					// its time to create new block
 					// so now we do
 					// 1.try to create last block
 					// 2.start collecting info on the new block
-					
-					
+	
 					if (currentBlockType==LINE_TYPE_FILTER_START)
 						hasEnoughFilters=true;//has atleast one filter
+			
+			currentCmd= (createNewSecton(currentBlockType,currentBlockBuffer));
+					commands.add(currentCmd);
+							
 					
-					commands.add(createNewSecton(currentBlockType,currentBlockBuffer));
+					if (currentBlockType==LINE_TYPE_ACTION_START)
+						 if (((SectionAction) currentCmd).isEmpty())
+							throw new ParsingException("action block must have atleast one action inside");
+							//action block must have atleast one action inside
+					
+						
 					
 					// empty last block
 					currentBlockBuffer = ""; 
@@ -159,13 +173,14 @@ public class MyFileScriptParser {
 		// create last block object
 		commands.add(createNewSecton(currentBlockType, currentBlockBuffer));
 
-		if (hasEnoughFilters)
+		if ((hasEnoughFilters) && (hasEnoughActions))	
 			return commands;
 		else
 			throw new ParsingException ("bla"); //one filter must be script
 	}
 
 
+	
 	/**
 	 * Separates command and param by the char "_"
 	 * 
@@ -193,7 +208,6 @@ public class MyFileScriptParser {
 		{
 
 			String[] returnValue=new String[2];
-
 
 			returnValue[0]=currentWord[0];
 			if (currentWord.length == 1)
@@ -251,11 +265,24 @@ public class MyFileScriptParser {
 
 
 		while (scnLine.hasNext()) {
+
+			if (allowMoreCommand==false)
+				//this means last command was "MOVE REMOVE - dont allow more commands"
+				throw new ParsingException("bla");
+			
+			
 			currentWord=scnLine.next();
 			System.out.println(currentWord);
+			
 			params=getObjectParam(currentWord);
-			filterList.add(ActionFactory.actionFactory(params[0], params[1]));
-
+			
+			Action newAction = ActionFactory.actionFactory(params[0], params[1]);
+			
+			filterList.add(newAction);
+	
+			if (newAction.isLastCommand())
+			allowMoreCommand=false;	
+			
 		}
 
 
@@ -341,12 +368,20 @@ public class MyFileScriptParser {
 
 		System.out.println("parseOrder - begin");
 		int i;
-		String[] orderType;
+	String[] orderType=buffer.split("\\s+");
 
-
-		//this regex cuts new line and all whitespaces. but, always gives back an empty string in orderType[0]
-		orderType=buffer.split("\\s+");
-
+		///String regex = "[^\\s\\r\\n]\\w*";
+		//Pattern pattern = Pattern.compile(regex);
+	//	String input = "...";
+		
+		//String[] orderType = Pattern.compile(regex,Pattern.MULTILINE).split(buffer);
+		///\\s+/sgi");
+		
+		 //String regex = "[^\\s\r\n]\\w*";
+	//	Pattern pattern = Pattern.compile(regex);
+		//String order
+		//Matcher orderType = pattern.matcher(buffer);
+		
 		for (i=0;i<orderType.length;i++)
 		{
 			System.out.println(orderType[i]);

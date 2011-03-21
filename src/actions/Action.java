@@ -10,6 +10,12 @@ public abstract class Action implements Command {
 		// TODO Auto-generated method stub
 
 	}
+	public boolean isLastCommand() {
+		return false;
+		// TODO Auto-generated method stub
+
+	}
 	
 	abstract protected void performAction(File f);
+	
 }
