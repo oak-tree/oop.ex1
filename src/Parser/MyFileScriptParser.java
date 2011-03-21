@@ -91,7 +91,7 @@ public class MyFileScriptParser {
 	 * @throws IllegalArgumentException
 	 * @throws ParsingException
 	 */
-	private void scanForBlocksInScript(String buffer) throws ParsingException,
+	private List<Command> scanForBlocksInScript(String buffer) throws ParsingException,
 			IllegalArgumentException, SecurityException,
 			InstantiationException, IllegalAccessException,
 			InvocationTargetException {
@@ -156,9 +156,9 @@ public class MyFileScriptParser {
 		}// while
 
 		// create last block object
-		createNewSecton(currentBlockType, currentBlockBuffer);
+		commands.add(createNewSecton(currentBlockType, currentBlockBuffer));
 
-		System.out.println();
+		return commands;
 	}
 	
 
@@ -357,11 +357,22 @@ private List<filter> parseFilterLine(String Line) throws ParsingException, Illeg
 	}
 
 
+/**
+ * activate parser
+ * @param fileString file name + path
+ * @return list of commmands
+ * @throws ParsingException
+ * @throws IllegalArgumentException
+ * @throws SecurityException
+ * @throws InstantiationException
+ * @throws IllegalAccessException
+ * @throws InvocationTargetException
+ * @throws IOException
+ */
 
-public Command[] parseFile(String fileString) throws ParsingException, IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, IOException {
+public List<Command> parseFile(String fileString) throws ParsingException, IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, IOException {
 		String fileBuffer =fileFunctions.readFileAsString(fileString);
-		scanForBlocksInScript(fileBuffer);
+		return scanForBlocksInScript(fileBuffer);
 
-		return null;
 	} 
 }
