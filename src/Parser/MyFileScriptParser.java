@@ -121,7 +121,7 @@ public class MyFileScriptParser {
 	 * @throws ScriptException
 	 *             if action or filter doesnt exist
 	 */
-	private Script createNewScript(Action act, filter flt, order ord)
+	private Script createNewScript(Action act, filter flt, order ord,ArrayList<String> cmt)
 			throws ScriptException {
 
 		if ((act == null) || (flt == null)) {
@@ -131,7 +131,7 @@ public class MyFileScriptParser {
 		/*
 		 * if (ord == null) { ord = OrderFactory.orderFactory(DEFAULT_ORDER); }
 		 */
-		return new Script(act, flt, ord);
+		return new Script(act, flt, ord,cmt);
 
 	}
 
@@ -155,6 +155,8 @@ public class MyFileScriptParser {
 		filter thisFilter = null;
 		SectionAction thisAction = null;
 		order thisOrder = null;
+		
+		ArrayList<String> scriptComments  = new ArrayList<String>();
 
 		while ((scn.hasNext()) && (scriptEnd == false)) {
 
@@ -173,7 +175,7 @@ public class MyFileScriptParser {
 				 */
 
 				if (lastBlock == NEW_SCRIPT) {
-					thisFilter = praseFilter(scn);
+					thisFilter = praseFilter(scn,scriptComments);
 					// = (filter) retInfo.getObject();
 
 					lastBlock = LINE_TYPE_FILTER;
@@ -190,7 +192,7 @@ public class MyFileScriptParser {
 				 * section 3.check if section isnot empty
 				 */
 				if (lastBlock == LINE_TYPE_FILTER) {
-					thisAction = praseAction(scn);
+					thisAction = praseAction(scn,scriptComments);
 					if (thisAction.isEmpty()) {
 						return null;
 						///throw new EmptyActionException("action section"
@@ -217,7 +219,7 @@ public class MyFileScriptParser {
 				 */
 
 				if (lastBlock == LINE_TYPE_ACTION) {
-					thisOrder = parseOrder(scn);
+					thisOrder = parseOrder(scn,scriptComments);
 					scriptEnd = true;
 				} else {
 					throw new BadOrderException("ORDER must"
@@ -236,13 +238,13 @@ public class MyFileScriptParser {
 		// TODO if order is empty
 
 		if ((lastBlock==LINE_TYPE_ACTION) || (lastBlock==LINE_TYPE_ORDER))
-			return createNewScript(thisAction, thisFilter, thisOrder);
+			return createNewScript(thisAction, thisFilter, thisOrder,scriptComments);
 		else
 			return null;
 
 	}
 
-	private order parseOrder(Scanner scn) {
+	private order parseOrder(Scanner scn,ArrayList<String> scriptComments) {
 	
 		/*
 		 * get first word. check if its one of the saved`s words insert it to
@@ -258,9 +260,11 @@ public class MyFileScriptParser {
 		while (scn.hasNext()) {
 
 			currentLine = scn.next();
-			currentLineType = whatKindOfLineIsIt(currentLine);
-			if ((currentLineType != LINE_TYPE_COMMENT)
-					&& (currentLineType != LINE_TYPE_EMPTY_LINE)) {
+			currentLineType = whatKindOfLineIsIt(getFirstWord(currentLine));
+			if (currentLineType== LINE_TYPE_COMMENT) {
+				scriptComments.add(currentLine);
+			} 
+			else if  (currentLineType != LINE_TYPE_EMPTY_LINE) {
 				if (foundNextWord) {
 					break;
 				}
@@ -282,12 +286,13 @@ public class MyFileScriptParser {
 
 	}
 
-	private SectionAction praseAction(Scanner scn) {
+	private SectionAction praseAction(Scanner scn,ArrayList<String> scriptComments) {
 
 	
 
 		String currentLine;
 		List<Action> actionList = new ArrayList<Action>();
+		
 		String[] params;
 		String param = null;
 		// int lineType = NO_MORE_LINES;
@@ -301,9 +306,11 @@ public class MyFileScriptParser {
 				throw new LastCommandException("cannot have more command here");
 			}
 			currentLine = scn.next();
-			currentLineType = whatKindOfLineIsIt(currentLine);
-			if ((currentLineType != LINE_TYPE_COMMENT)
-					&& (currentLineType != LINE_TYPE_EMPTY_LINE)) {
+			currentLineType = whatKindOfLineIsIt(getFirstWord(currentLine));
+			if (currentLineType== LINE_TYPE_COMMENT) {
+				scriptComments.add(currentLine);
+			} 
+			else if  (currentLineType != LINE_TYPE_EMPTY_LINE) {
 				if (currentLineType < LINE_TYPE_OTHER)
 					break; // found next block
 				else {
@@ -339,7 +346,7 @@ public class MyFileScriptParser {
  * @param scn Scanner of buffer
  * @return filter (And filter)
  */
-	private filter praseFilter(Scanner scn) {
+	private filter praseFilter(Scanner scn,ArrayList<String> scriptComments) {
 
 		List<filter> filterList = new ArrayList<filter>();
 
@@ -351,9 +358,11 @@ public class MyFileScriptParser {
 		while (scn.hasNext()) {
 			currentLine = scn.next();
 	
-			currentLineType = whatKindOfLineIsIt(currentLine);
-			if ((currentLineType != LINE_TYPE_COMMENT)
-					&& (currentLineType != LINE_TYPE_EMPTY_LINE)) {
+			currentLineType = whatKindOfLineIsIt(getFirstWord(currentLine));
+			if (currentLineType== LINE_TYPE_COMMENT) {
+				scriptComments.add(currentLine);
+			} 
+			else if  (currentLineType != LINE_TYPE_EMPTY_LINE) {
 				if (currentLineType < LINE_TYPE_OTHER)
 					break; // found new section
 				else

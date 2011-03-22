@@ -28,7 +28,7 @@ public abstract class FilterFactory {
 				put("SMALLER", SmallerFilter.class);
 				put("FILE", FileFilter.class);
 				put("READABLE", ReadableFilter.class);
-				put("WRITEABLE", WriteableFilter.class);
+				put("WRITABLE", WriteableFilter.class);
 				put("EXECUTABLE", ExecutableFilter.class);
 
 
