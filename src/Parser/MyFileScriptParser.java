@@ -87,6 +87,8 @@ public class MyFileScriptParser {
 
 	private int whatKindOfLineIsIt(String firstWord) {
 
+		firstWord=firstWord.trim();
+		
 		if (firstWord.length() == 0)
 			return LINE_TYPE_EMPTY_LINE;
 
@@ -373,7 +375,7 @@ public class MyFileScriptParser {
 	private List<filter> parseFilterLine(String Line) {
 
 		List<filter> filterList = new ArrayList<filter>();
-		String[] wordsInLine = Line.split(" ");
+		String[] wordsInLine = Line.split("\\s");
 
 		String[] params;
 		int i;
