@@ -16,7 +16,7 @@ public class MoveAction extends Action {
 		{
 			outFileDir.mkdirs();
 		}
-		File outFile = new File (_dirName + f.getName());
+		File outFile = new File (_dirName + File.separator + f.getName());
 		f.renameTo(outFile);
 	}
 	

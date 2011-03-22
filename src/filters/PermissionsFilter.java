@@ -18,12 +18,13 @@ public abstract class PermissionsFilter extends filter {
 		{
 			// TODO
 		}
+
 	}
 	public abstract boolean hasPermission(File f);
 
 	
 	public boolean isFileFilterd(File f)
 	{
-		return hasPermission(f) == _isPermisiionAllowed;
+		return returnResult(hasPermission(f) == _isPermisiionAllowed);
 	}
 }

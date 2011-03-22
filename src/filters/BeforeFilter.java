@@ -13,6 +13,6 @@ public class BeforeFilter extends DateFilter  {
 	
 	protected boolean isDateValid(Date fileDate, Date comparisonDate)
 	{
-		return fileDate.after(comparisonDate);
+		return comparisonDate.before(fileDate);
 	}
 }

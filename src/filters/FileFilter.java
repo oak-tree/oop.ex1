@@ -6,17 +6,25 @@ import java.util.ArrayList;
 public class FileFilter extends filter {
 	
 	String _pattern;
-	FileFilter(ArrayList<String> param)
+	public FileFilter(ArrayList<String> param)
 	{
-		//TODO  change it 
-	_pattern = param.get(0);
+		super(param);
+		_pattern = param.get(0);
 	}
 	private boolean patternSearch(String text, String pattern)
 	{
 	    // split by the * symbol
 	    String [] strings = pattern.split("\\*");
         
-	    
+	    if(!text.startsWith(strings[0]))
+	    {
+	    	return false;
+	    }
+	    if(!pattern.endsWith("*") &&
+	    		!text.endsWith(strings[strings.length - 1]))
+	    {
+	    	return false;
+	    }
 	    // look for all of the cards
 	    for (String str : strings)
 	    {
@@ -30,13 +38,15 @@ public class FileFilter extends filter {
 	    	
 	    	text = text.substring(index + str.length());
 	    }
+	    
+	    
 	        
 	    return true;
 	 }
 	
 	public boolean isFileFilterd(File f)
 	{
-		return patternSearch(f.getName(), _pattern);
+		return returnResult(patternSearch(f.getName(), _pattern));
 	}
 
 

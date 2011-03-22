@@ -1,4 +1,5 @@
 package filters;
+import java.lang.reflect.Constructor;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -68,8 +69,11 @@ public abstract  class FilterFactory {
 	        	//TODO //throw new UnsupportedFilterException();
 	        }
 	        System.out.println("Filter Factory");
-	    //TODO 
-	            
+	        System.out.println(filter);
+	        Class c = FILTER_TABLE.get(filter);
+	        Constructor[] cc = FILTER_TABLE.get(filter).getConstructors();
+	        System.out.println(cc.length);
+	    //TODO 	            
 	            return (filter) (FILTER_TABLE.get(filter).
 	                    getConstructors()[0].newInstance(param));
 	        	       

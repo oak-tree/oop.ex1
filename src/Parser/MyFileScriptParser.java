@@ -388,8 +388,7 @@ public class MyFileScriptParser {
 
 
 			params = getObjectParam(wordsInLine[i]);
-			
-			filterList.add(FilterFactory.filterFactory(params[0],getFilterParam(params)));
+				filterList.add(FilterFactory.filterFactory(params[0],getFilterParam(params)));
 
 		} // for
 		return filterList;
@@ -400,7 +399,7 @@ public class MyFileScriptParser {
 		
 		ArrayList<String> filterParams = new ArrayList<String>();
 		int i;
-		for (i = 0; i < params.length; i++) {
+		for (i = 1; i < params.length; i++) {
 			filterParams.add(params[i]);
 		}
 	

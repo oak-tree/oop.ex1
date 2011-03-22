@@ -16,7 +16,7 @@ public class AfterFilter  extends DateFilter  {
 	
 	protected boolean isDateValid(Date fileDate, Date comparisonDate)
 	{
-		return fileDate.after(comparisonDate);
+		return comparisonDate.after(fileDate);
 	}
 
 }

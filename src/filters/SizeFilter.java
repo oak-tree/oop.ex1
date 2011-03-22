@@ -10,6 +10,7 @@ public abstract class SizeFilter   extends filter {
 	int _size; 
 	
 	public SizeFilter(ArrayList<String> param) {
+		super(param);
 		try
 		{
 		_size = Integer.parseInt(param.get(0));
@@ -24,7 +25,7 @@ public abstract class SizeFilter   extends filter {
 	
 	public boolean isFileFilterd(File f)
 	{
-		return isSizeValid(_size, f.length());
+		return returnResult(isSizeValid(_size, f.length()));
 	}
 
 

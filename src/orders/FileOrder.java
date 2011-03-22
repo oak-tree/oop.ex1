@@ -4,8 +4,13 @@ import java.io.File;
 
 import fileManager.FileElement;
 
-public class FileOrder  extends order {
+public class FileOrder  extends AbsOrder {
 
+	AbsOrder _defaultOrder;
+	public FileOrder()
+	{
+		
+	}
 	protected void insertData(FileElement fe)
 	{
 		File f = new File (fe.getFileName());
@@ -15,7 +20,12 @@ public class FileOrder  extends order {
 	public int compare(FileElement o1, FileElement o2) {
 		// TODO Auto-generated method stub
 		checkData(o1, o2);
-		return ((String) o1.getData()).compareTo((String) (o2.getData())); 
+		int res = ((String) o1.getData()).compareTo((String) (o2.getData()));
+		if (res == 0)
+		{
+			return super.compare(o1, o2);
+		}
+		return res;
 	}
 
 }

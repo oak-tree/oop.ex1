@@ -26,7 +26,7 @@ public class Script {
 			File f = new File (i1.next().getFileName());
 			if (_filterCommand.isFileFilterd(f))
 			{
-				//_actionCommand
+				_actionCommand.performAction(f);
 			}
 		}
 	}
