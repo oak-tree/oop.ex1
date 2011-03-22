@@ -12,4 +12,7 @@ public class RemoveAction extends Action {
 	{
 		f.delete();
 	}
+	public boolean isItLastAction(){
+		return true;
+	}
 }
