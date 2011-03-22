@@ -94,7 +94,7 @@ public class FileManager {
 	{
 		if (newCom == null)
 		{
-			newCom = new DefaultComparator();
+			newCom = new AbsOrder();
 		}
 		TreeSet <FileElement> newTree = new TreeSet<FileElement> (newCom);
 		for (Iterator <FileElement>i1 = _tree.iterator(); i1.hasNext() ;)
