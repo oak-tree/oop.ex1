@@ -1,15 +1,11 @@
 package filescript;
 import actions.Action;
-import actions.SectionAction;
 import filters.filter;
 import orders.order;
 import fileManager.*;
 
-import myFileScriptExceptions.*;
-
 import java.util.*;
 import java.io.File;
-
 public class Script {
 	private Action _actionCommand;
 	private filter _filterCommand;
@@ -33,7 +29,10 @@ public class Script {
 				//_actionCommand
 			}
 		}
+<<<<<<< HEAD
 
+=======
+>>>>>>> d3528346d0c4570c63542d1bfb645bd7a3980607
 	}
 	
 	
