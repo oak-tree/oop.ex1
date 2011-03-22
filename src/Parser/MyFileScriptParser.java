@@ -8,8 +8,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import java.util.logging.Filter;
-import java.util.regex.*;
+
 
 import actions.Action;
 import actions.ActionFactory;
@@ -165,7 +164,7 @@ public class MyFileScriptParser {
 		int currentLineType;
 		String currentLine;
 		int lastBlock = NEW_SCRIPT;
-		int currentBlock;
+	
 
 		boolean scriptEnd = false;
 
@@ -349,7 +348,7 @@ public class MyFileScriptParser {
 
 		System.out.println("Filter - Begin");
 		String currentLine;
-		String[] params;
+
 		int lineType = NO_MORE_LINES;
 		// still search by line
 		while (scn.hasNext()) {
