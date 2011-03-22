@@ -257,7 +257,7 @@ public class MyFileScriptParser {
 			currentLine = scn.next();
 			currentLineType = whatKindOfLineIsIt(currentLine);
 			if ((currentLineType != LINE_TYPE_COMMENT)
-					|| (currentLineType != LINE_TYPE_EMPTY_LINE)) {
+					&& (currentLineType != LINE_TYPE_EMPTY_LINE)) {
 				if (foundNextWord) {
 					break;
 				}
@@ -265,7 +265,7 @@ public class MyFileScriptParser {
 				if (currentLineType < LINE_TYPE_OTHER) {
 
 					orderString = DEFAULT_ORDER;
-
+					break;
 				} else {
 					orderString = currentLine;
 					System.out.println(currentLine);
@@ -273,6 +273,7 @@ public class MyFileScriptParser {
 				}
 			}// while
 		}
+		
 		System.out.println("parseOrder - end");
 		return OrderFactory.orderFactory(orderString);
 
@@ -299,7 +300,7 @@ public class MyFileScriptParser {
 			currentLine = scn.next();
 			currentLineType = whatKindOfLineIsIt(currentLine);
 			if ((currentLineType != LINE_TYPE_COMMENT)
-					|| (currentLineType != LINE_TYPE_EMPTY_LINE)) {
+					&& (currentLineType != LINE_TYPE_EMPTY_LINE)) {
 				if (currentLineType < LINE_TYPE_OTHER)
 					break; // found next block
 				else {
@@ -349,7 +350,7 @@ public class MyFileScriptParser {
 			System.out.println(currentLine);
 			currentLineType = whatKindOfLineIsIt(currentLine);
 			if ((currentLineType != LINE_TYPE_COMMENT)
-					|| (currentLineType != LINE_TYPE_EMPTY_LINE)) {
+					&& (currentLineType != LINE_TYPE_EMPTY_LINE)) {
 				if (currentLineType < LINE_TYPE_OTHER)
 					break; // found new section
 				else
