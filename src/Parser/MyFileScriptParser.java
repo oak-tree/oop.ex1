@@ -39,6 +39,9 @@ public class MyFileScriptParser {
 	private final static int LINE_TYPE_EMPTY_LINE=-1;
 	private final static int NO_MORE_LINES = -1;
 
+	
+
+	int currentLineType;
 	/**
 	 * get object parameter. note: cannot have more than 1 parameter and doesnt
 	 * have to have one at all
@@ -83,6 +86,7 @@ public class MyFileScriptParser {
 
 		if (firstWord.length()==0) 
 			return LINE_TYPE_EMPTY_LINE;
+		
 		int i = 0;
 		// scan for known words
 		while ((i < SaveWords.length)
@@ -143,12 +147,11 @@ public class MyFileScriptParser {
 	 */
 	private final int NEW_SCRIPT = -1;
 
-	private Script praseScript(Scanner scn) throws ParsingException,
+	private Script parseScript(Scanner scn) throws ParsingException,
 			IllegalArgumentException, SecurityException,
 			InstantiationException, IllegalAccessException,
 			InvocationTargetException {
 
-		int currentLineType;
 		String currentLine;
 		int lastBlock = NEW_SCRIPT;
 	
@@ -159,11 +162,9 @@ public class MyFileScriptParser {
 		SectionAction thisAction = null;
 		order thisOrder = null;
 
-		currentLine = scn.next();
-		currentLineType = whatKindOfLineIsIt(getFirstWord(currentLine));
-		returnInfo retInfo = null;
+	
 		
-		while ((scn.hasNext()) &&(scriptEnd==false)) {
+		while ((scn.hasNext()) &&  (scriptEnd==false)) {
 
 			
 
@@ -182,8 +183,8 @@ public class MyFileScriptParser {
 					 */
 
 					if (lastBlock == NEW_SCRIPT) {
-						retInfo = praseFilter(scn);
-						thisFilter = (filter) retInfo.getObject();
+						thisFilter = praseFilter(scn);
+						// = (filter) retInfo.getObject();
 						
 						lastBlock = LINE_TYPE_FILTER;
 					} else
@@ -199,8 +200,7 @@ public class MyFileScriptParser {
 					 * section 3.check if section isnot empty
 					 */
 					if (lastBlock == LINE_TYPE_FILTER) {
-						retInfo=praseAction(scn);
-						thisAction = (SectionAction)retInfo.getObject();
+						thisAction =praseAction(scn);
 						if (thisAction.isEmpty()) {
 							throw new ParsingException("Error");
 						}
@@ -224,8 +224,7 @@ public class MyFileScriptParser {
 					 */
 
 					if (lastBlock == LINE_TYPE_ACTION) {
-						retInfo =praseOrder(scn);
-						thisOrder = (order) retInfo.getObject();
+						thisOrder =parseOrder(scn);
 						scriptEnd = true;
 					} else {
 						throw new ParsingException("Error");
@@ -238,15 +237,14 @@ public class MyFileScriptParser {
 					throw new ParsingException("Error");
 				}
 				
-				currentLineType=retInfo.getNewBlock();
-		
+						
 		} // while
 
 		// TODO if order is empty
 		return createNewScript(thisAction, thisFilter, thisOrder);
 	}
 
-	private returnInfo praseOrder(Scanner scn) throws ParsingException,
+	private order parseOrder(Scanner scn) throws ParsingException,
 			IllegalArgumentException, SecurityException,
 			InstantiationException, IllegalAccessException,
 			InvocationTargetException {
@@ -257,33 +255,39 @@ public class MyFileScriptParser {
 		 */
 
 
-		String currentLine = scn.next();
-		int lineType = NO_MORE_LINES;
+		String currentLine ;//= scn.next();
+		//int lineType = NO_MORE_LINES;
 		
+		boolean foundNextWord=false;
+		String orderString=DEFAULT_ORDER;
 		
-
-		while (scn.hasNext()) {
+		while (scn.hasNext())  {
 		
 			currentLine = scn.next();
-			lineType = whatKindOfLineIsIt(currentLine);
-			if ((lineType != LINE_TYPE_COMMENT)  || (lineType!=LINE_TYPE_EMPTY_LINE)) {
-				if (lineType < LINE_TYPE_OTHER) {
-					break; // found next block
+			currentLineType = whatKindOfLineIsIt(currentLine);
+			if ((currentLineType != LINE_TYPE_COMMENT)  || (currentLineType!=LINE_TYPE_EMPTY_LINE)) {
+				if (foundNextWord) {
+						break; }
+				foundNextWord=true;
+				if (currentLineType < LINE_TYPE_OTHER) {
+				
+					orderString=DEFAULT_ORDER;
+
 				}
-				else
-					
+				else {
+					orderString=currentLine;
 					System.out.println(currentLine);
-					break;
+				
 				}
 			}// while
-
+		}
 		System.out.println("parseOrder - end");
-		return new returnInfo(OrderFactory.orderFactory(currentLine), lineType);
-	}
+		return OrderFactory.orderFactory(orderString);
+
 	
+	}
 
-
-	private returnInfo praseAction(Scanner scn) throws ParsingException,
+	private SectionAction praseAction(Scanner scn) throws ParsingException,
 			IllegalArgumentException, SecurityException,
 			InstantiationException, IllegalAccessException,
 			InvocationTargetException {
@@ -294,7 +298,7 @@ public class MyFileScriptParser {
 		List<Action> actionList = new ArrayList<Action>();
 		String[] params;
 		String param = null;
-		int lineType = NO_MORE_LINES;
+		//int lineType = NO_MORE_LINES;
 		boolean allowMoreCommand = true;
 
 		while (scn.hasNext()) {
@@ -305,9 +309,9 @@ public class MyFileScriptParser {
 				throw new ParsingException("bla");
 			}
 			currentLine = scn.next();
-			lineType = whatKindOfLineIsIt(currentLine);
-			if ((lineType != LINE_TYPE_COMMENT)  || (lineType!=LINE_TYPE_EMPTY_LINE)) {
-				if (lineType < LINE_TYPE_OTHER)
+			currentLineType = whatKindOfLineIsIt(currentLine);
+			if ((currentLineType != LINE_TYPE_COMMENT)  || (currentLineType!=LINE_TYPE_EMPTY_LINE)) {
+				if (currentLineType < LINE_TYPE_OTHER)
 					break; // found next block
 				else
 				{
@@ -335,11 +339,11 @@ public class MyFileScriptParser {
 
 		}// while
 		System.out.println("praseAction - end");
-		return new returnInfo(new SectionAction(actionList), lineType);
+		return new SectionAction(actionList);
 
 	}
 
-	private returnInfo praseFilter(Scanner scn) throws ParsingException,
+	private filter praseFilter(Scanner scn) throws ParsingException,
 			IllegalArgumentException, SecurityException,
 			InstantiationException, IllegalAccessException,
 			InvocationTargetException {
@@ -349,14 +353,14 @@ public class MyFileScriptParser {
 		System.out.println("praseFilter - Begin");
 		String currentLine;
 
-		int lineType = NO_MORE_LINES;
+	//	int lineType = NO_MORE_LINES;
 		// still search by line
 		while (scn.hasNext()) {
 			currentLine = scn.next();
 			System.out.println(currentLine);
-			lineType = whatKindOfLineIsIt(currentLine);
-			if ((lineType != LINE_TYPE_COMMENT)  || (lineType!=LINE_TYPE_EMPTY_LINE)) {
-				if (lineType < LINE_TYPE_OTHER)
+			currentLineType = whatKindOfLineIsIt(currentLine);
+			if ((currentLineType != LINE_TYPE_COMMENT)  || (currentLineType!=LINE_TYPE_EMPTY_LINE)) {
+				if (currentLineType < LINE_TYPE_OTHER)
 					break; // found new section
 				else
 					filterList.add(new OrFilter(parseFilterLine(currentLine)));
@@ -366,7 +370,7 @@ public class MyFileScriptParser {
 
 		// TODO think on emtpy list. should take care of this as well
 		// TODO if buffer is empty do something
-		return new returnInfo(new AndFilter(filterList), lineType);
+		return new AndFilter(filterList);
 
 	}
 
@@ -425,11 +429,14 @@ public class MyFileScriptParser {
 
 		Scanner scn = new Scanner(fileBuffer);
 
+		String currentLine = scn.next();
+		currentLineType = whatKindOfLineIsIt(getFirstWord(currentLine));
+		
 		// make sure scanner check for new line and not new words
 		scn.useDelimiter(System.getProperty("line.separator"));
 
 		while (scn.hasNext()) {
-			scripts.add(praseScript(scn));
+			scripts.add(parseScript(scn));
 		}
 
 		return scripts;
