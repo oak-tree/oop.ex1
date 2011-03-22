@@ -32,7 +32,7 @@ public class FileFilter extends filter {
 	    return true;
 	 }
 	
-	protected boolean isFileFilterd(File f)
+	public boolean isFileFilterd(File f)
 	{
 		return patternSearch(f.getName(), _pattern);
 	}

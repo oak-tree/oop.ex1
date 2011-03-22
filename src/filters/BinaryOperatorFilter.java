@@ -16,7 +16,7 @@ public abstract class BinaryOperatorFilter extends filter {
 	{
 		_filterList = filterList;
 	}
-	protected boolean isFileFilterd(File f)
+	public boolean isFileFilterd(File f)
 	{
 		boolean res = _defaultValue;
 		for (Iterator<filter>i1 = _filterList.iterator(); i1.hasNext() ;)

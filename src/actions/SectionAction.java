@@ -20,7 +20,7 @@ public class SectionAction extends Action {
 		_actionsList = l;
 	}
 	@Override
-	protected void performAction(File f) {
+	public void performAction(File f) {
 		for (Iterator <Action>i1 = _actionsList.iterator(); i1.hasNext() ;)
 		{
 			Action act = i1.next();

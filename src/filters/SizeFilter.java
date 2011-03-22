@@ -20,7 +20,7 @@ public abstract class SizeFilter   extends filter {
 	
 	abstract protected boolean isSizeValid(long paramSize, long fileSize);
 	
-	protected boolean isFileFilterd(File f)
+	public boolean isFileFilterd(File f)
 	{
 		return isSizeValid(_size, f.length());
 	}

@@ -25,7 +25,7 @@ public abstract class PermissionAction extends Action {
 	
 	abstract protected void setPermission(File f, boolean doable);
 
-	protected void performAction(File f)
+	public void performAction(File f)
 	{
 		setPermission(f, _isSetToTrue);
 	}

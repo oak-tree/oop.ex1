@@ -10,7 +10,7 @@ public abstract class filter implements  Command {
 
 	}
 	
-	abstract protected boolean isFileFilterd(File f);
+	abstract public boolean isFileFilterd(File f);
 	
 	
 	

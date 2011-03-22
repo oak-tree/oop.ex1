@@ -23,7 +23,7 @@ public abstract class DateFilter extends filter {
 	
 	abstract protected boolean isDateValid(Date fileDate, Date ComparisonDate);
 	
-	protected boolean isFileFilterd(File f)
+	public boolean isFileFilterd(File f)
 	{
 		return isDateValid(_comparisonDate, new Date(f.lastModified()));
 	}

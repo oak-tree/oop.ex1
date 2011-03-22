@@ -1,25 +1,67 @@
 package fileManager;
+import java.io.File;
 import java.util.*;
+import java.io.IOException;
+
 
 
 public class FileManager {
 	
-	List<String> _allFiles;
-	TreeSet <String> _tree;
+	private List<String> _allFiles;
+	private TreeSet <FileElement> _tree;
+	private String _dirName; 
 	
 	public void reset()
 	{
-		for (Iterator <String>i1 = _allFiles.iterator(); i1.hasNext() ;)
+		for (Iterator <String> i1 = _allFiles.iterator(); i1.hasNext() ;)
 		{
 			String st = i1.next();
-			_tree.add(st);
+			FileElement newFileElement = new FileElement(st, null);
+			_tree.add(newFileElement);
 		}
 	}
-	public FileManager (List <String> files)
+	
+	
+	private ArrayList<String> getAllFiles(File f)
 	{
-		_allFiles = files;
+		ArrayList<String> filesList = new ArrayList();
+		File[] flist = f.listFiles();
+		if (flist == null)
+		{
+			return filesList;
+		}
+		for (int i = 0; i < flist.length; i++ )
+		{
+			if (flist[i].isDirectory())
+			{
+				filesList.addAll(getAllFiles(flist[i]));
+			}
+			else
+			{
+				try
+				{
+					filesList.add(flist[i].getCanonicalPath());
+				}
+				catch (IOException e)
+				{
+					
+				}
+			}
+		}
+		return filesList;
+	}
+	public FileManager (String dirName)
+	{
+		File dir = new File(dirName);
+		_dirName = dirName;
 		
-		_tree = new TreeSet<String> (String.CASE_INSENSITIVE_ORDER);
+		_allFiles = getAllFiles(dir);
+		for (Iterator<String>i1 = _allFiles.iterator(); i1.hasNext() ;)
+		{
+			System.out.println(i1.next());
+		}
+		DefaultComparator df = new DefaultComparator();
+		_tree = new TreeSet<FileElement> (df);
 		
 		// initializing the tree with the default comparator
 		reset();
@@ -27,17 +69,28 @@ public class FileManager {
 	
 	
 	// sort the
-	public void ChangeComparator(Comparator<String> newCom)
+	public void ChangeComparator(Comparator<FileElement> newCom)
 	{
 		
-		TreeSet <String> newTree = new TreeSet<String> (newCom);
-		for (Iterator <String>i1 = _tree.iterator(); i1.hasNext() ;)
+		TreeSet <FileElement> newTree = new TreeSet<FileElement> (newCom);
+		for (Iterator <FileElement>i1 = _tree.iterator(); i1.hasNext() ;)
 		{
-			String st = i1.next();
-			newTree.add(st);
+			
+			/* after replacing the comparator the data for 
+			 * comparison needs to be changed
+			 */
+			FileElement el = i1.next();
+			el.setData(null);
+			newTree.add(el);
 		}
 		
 		_tree = newTree;
 	}
+	
+	public Iterator<FileElement> getFilesIterator()
+	{
+		return _tree.iterator();
+	}
+	
 
 }
