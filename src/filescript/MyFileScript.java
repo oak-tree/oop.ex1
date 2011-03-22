@@ -8,11 +8,11 @@ import java.util.List;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-import actions.Action;
 
 //import actions.Action;
 
 import myFileScriptExceptions.ParsingException;
+import myFileScriptExceptions.RunException;
 import fileManager.*;
 public class MyFileScript {
 
@@ -54,14 +54,24 @@ public static void main(String[] args) throws ParsingException, IllegalArgumentE
 				}
 
 			} catch (ParsingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
+				quit();
+			} 
+			catch (RunException e) {
+				
+				
 			} 
 			
 
 		
 		
 		
+	}
+
+	private static void quit()
+	{
+		System.err.println("Error");
+		System.exit(-1);
 	}
 
 }
