@@ -232,7 +232,7 @@ public class MyFileScriptParser {
 
 		// TODO if order is empty
 		System.out.println("b-createnewscript");
-		if (scriptEnd)
+		if ((lastBlock==LINE_TYPE_ACTION) || (lastBlock==LINE_TYPE_ORDER))
 			return createNewScript(thisAction, thisFilter, thisOrder);
 		else
 			return null;
