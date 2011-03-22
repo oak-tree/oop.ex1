@@ -192,8 +192,9 @@ public class MyFileScriptParser {
 				if (lastBlock == LINE_TYPE_FILTER) {
 					thisAction = praseAction(scn);
 					if (thisAction.isEmpty()) {
-						throw new EmptyActionException("action section"
-								+ " must have at least one command");
+						return null;
+						///throw new EmptyActionException("action section"
+							//	+ " must have at least one command");
 					}
 
 					lastBlock = LINE_TYPE_ACTION;
