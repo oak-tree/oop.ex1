@@ -50,6 +50,7 @@ public abstract  class ActionFactory {
 	  
 	    
 	    /**
+	     * 
 	     * The function is a factory to create action.
 	     * the function receive the filter name and its parameter and return
 	     * a matching filter with the given parameter
@@ -57,25 +58,28 @@ public abstract  class ActionFactory {
 	     * @param filter the name of the filter 
 	     * @param param the parameter of the filter
 	     * @return the filter object initialized with the parameter
-	     * @throws InvocationTargetException 
-	     * @throws IllegalAccessException 
-	     * @throws InstantiationException 
-	     * @throws SecurityException 
-	     * @throws IllegalArgumentException 
-	     * @throws InvalidFilterParameterException if the filter parameters ware wrong
-	     * @throws UnsupportedFilterException if the filter name is not defined
+	     * @param action String. holds 'action' word
+	     * @param param String. parameter for action
+	     * @return ActionObject
+	     * @throws BadParametersException if param action is wrong
+	     * @throws UnkownActionException if action contains unknown action
 	     */
 	    public static Action actionFactory(String action , String param) 
-	    throws ParsingException, IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException {
+	    throws BadParametersException ,UnkownActionException {
 	        if (!ACTION_TABLE.containsKey(action)) {
-	           //TODO //throw new UnsupportedFilterException();
-	        }
+	         throw new UnkownActionException("unkown action");
+	       }
 	    //TODO add try and catch and throw some exepction    
-	            return (Action) (ACTION_TABLE.get(action).
+	        try {
+	        	return (Action) (ACTION_TABLE.get(action).
 	                    getConstructors()[0].newInstance(param));
-	        	       
-	       
-	    
+	                          
+	            } catch (InvocationTargetException e) {
+	                throw (BadParametersException) e.getCause();
+	            } catch (Exception e) {
+	                //reflection exception should never happen
+	                throw new RuntimeException("unknown error", e);
+	            }
 	    
 	
 	    }
