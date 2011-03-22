@@ -16,18 +16,27 @@ public class MyFileScript {
 	}
 	/**
 	 * @param args
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 * @throws IOException 
+	 * @throws SecurityException 
+	 * @throws IllegalArgumentException 
+	 * @throws ParsingException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParsingException, IllegalArgumentException, SecurityException, IOException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		// TODO Auto-generated method stub
 		
+		MyFileScriptParser scriptParser = new MyFileScriptParser();
+		scriptParser.parseFile("testfiles/test.txt");
 		/*
 		
 		System.out.println("----welcome screen----");
 	//	if (validation(args)==true) { 
-			MyFileScriptParser scriptParser = new MyFileScriptParser();
+			
 			//scriptParser.parseFile(args[0]);
 			try {
-				scriptParser.parseFile("testfiles/test.txt");
+			
 			} catch (ParsingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
