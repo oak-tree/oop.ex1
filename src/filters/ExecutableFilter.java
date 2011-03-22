@@ -1,9 +1,10 @@
 package filters;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class ExecutableFilter extends PermissionsFilter {
-	public ExecutableFilter(String param)
+	public ExecutableFilter(ArrayList<String> param)
 	{
 		super(param);
 	}

@@ -1,6 +1,7 @@
 package filters;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import myFileScriptExceptions.*;
@@ -60,10 +61,10 @@ public abstract  class FilterFactory {
 	     * @throws InvalidFilterParameterException if the filter parameters ware wrong
 	     * @throws UnsupportedFilterException if the filter name is not defined
 	     */
-	    public static filter filterFactory(String filter , String param) 
+	    public static filter filterFactory(String filter , ArrayList<String> param) 
 	    throws ParsingException, IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException {
 	        if (!FILTER_TABLE.containsKey(filter)) {
-	        	throw new ParsingException ("bla");
+	        	throw new ParsingException ("Error");
 	        	//TODO //throw new UnsupportedFilterException();
 	        }
 	        System.out.println("Filter Factory");

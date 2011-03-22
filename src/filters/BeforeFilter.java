@@ -1,12 +1,13 @@
 package filters;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class BeforeFilter extends DateFilter  {
 
-	public BeforeFilter(String params)
+	public BeforeFilter(ArrayList<String> param)
 	{
-		super(params);
+		super(param);
 	}
 
 	

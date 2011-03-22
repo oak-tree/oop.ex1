@@ -1,13 +1,15 @@
 package filters;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class FileFilter extends filter {
 	
 	String _pattern;
-	FileFilter(String param)
+	FileFilter(ArrayList<String> param)
 	{
-		_pattern = param;
+		//TODO  change it 
+	_pattern = param.get(0);
 	}
 	private boolean patternSearch(String text, String pattern)
 	{

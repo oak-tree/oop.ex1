@@ -1,9 +1,11 @@
 package filters;
 
+import java.util.ArrayList;
+
 public class GreaterFilter extends SizeFilter  {
 
 	
-	public GreaterFilter(String param)
+	public GreaterFilter(ArrayList<String> param)
 	{
 		super(param);
 	}
