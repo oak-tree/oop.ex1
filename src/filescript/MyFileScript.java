@@ -31,14 +31,16 @@ public class MyFileScript {
 		
 
 		MyFileScriptParser scriptParser = new MyFileScriptParser();
-		scriptParser.parseFile("testfiles/test.txt");
+		//scriptParser.parseFile("testfiles/test2.txt");
 
 			try {
 
-				List<Script> scripts = scriptParser.parseFile(args[2]);
-				FileManager fm = new FileManager(args[1]);
+				List<Script> scripts = scriptParser.parseFile("testfiles\\test2.txt");
+				//FileManager fm = new FileManager(args[1]);
+				FileManager fm = new FileManager("C:\\Users\\ami\\Documents\\srefat");
 				Script script = scripts.remove(0);
 				script.runScript(fm);
+
 
 			} catch (ParsingException e) {
 				// TODO Auto-generated catch block

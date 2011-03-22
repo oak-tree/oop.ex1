@@ -3,6 +3,11 @@ import java.io.File;
 
 import java.io.IOException;
 
+/**
+ * 
+ * print file's details action
+ *
+ */
 public class PrintAction extends Action {
 
 	
@@ -14,6 +19,9 @@ public class PrintAction extends Action {
 	
 	}
 	
+	/**
+	 * print the file's details
+	 */
 	public void performAction(File f)
 	{
 		System.out.println(getReadPermission(f) +
@@ -22,6 +30,12 @@ public class PrintAction extends Action {
 						   getFileSize(f) + " " + 
 						   getFullPath(f));
 	}
+	
+	/**
+	 * get whether the file is readable
+	 * @param f the file
+	 * @return a string representing the readability
+	 */
 	
 	private String getReadPermission(File f)
 	{
@@ -35,6 +49,12 @@ public class PrintAction extends Action {
 		}
 	}
 	
+	/**
+	 * get whether the file is writable
+	 * @param f the file
+	 * @return a string representing whether the file is writable
+	 */
+	
 	private String getWritePermission(File f)
 	{
 		if (f.canExecute())
@@ -47,6 +67,11 @@ public class PrintAction extends Action {
 		}
 	}
 	
+	/**
+	 * get whether the file is writable
+	 * @param f the file
+	 * @return a string representing whether the file is executable
+	 */
 	private String getExecPermission(File f)
 	{
 		if (f.canExecute())
@@ -59,11 +84,21 @@ public class PrintAction extends Action {
 		}
 	}
 	
+	/**
+	 * check the file size
+	 * @param f the file
+	 * @return the size
+	 */
 	private long getFileSize(File f)
 	{
 		return f.length();
 	}
 	
+	/**
+	 * get the full path of a file
+	 * @param f the file
+	 * @return the path
+	 */
 	private String getFullPath(File f)
 	{
 		try

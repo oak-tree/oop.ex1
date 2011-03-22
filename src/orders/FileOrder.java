@@ -17,6 +17,11 @@ public class FileOrder  extends AbsOrder {
 		fe.setData(f.getName());
 	}
 	@Override
+	/**
+	 * compare file based on their name
+	 * @param o1 the first element we compare
+	 * @param o2 the second element we compare
+	 */
 	public int compare(FileElement o1, FileElement o2) {
 		// TODO Auto-generated method stub
 		checkData(o1, o2);

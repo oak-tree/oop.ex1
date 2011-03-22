@@ -1,7 +1,11 @@
 package actions;
 
 import java.io.*;
-
+/**
+ * 
+ * This action copies files to a new destination
+ *
+ */
 public class CopyAction extends Action {
 
 	private String _dirName;
@@ -13,13 +17,14 @@ public class CopyAction extends Action {
 	
 	public void performAction(File f)
 	{
-		
+		// create the directory if does not exist
 		File outFileDir = new File (_dirName);
 		if (!outFileDir.exists())
 		{
 			outFileDir.mkdirs();
 		}
 		
+		// copy the file to a new file 
 		File outFile = new File (_dirName + File.separator + f.getName());
 		try
 		{

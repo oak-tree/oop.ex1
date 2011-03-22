@@ -11,7 +11,13 @@ public class ModOrder  extends AbsOrder {
 		File f = new File (fe.getFileName());
 		fe.setData(new Long(f.lastModified()));
 	}
-	@Override
+	
+	
+	/**
+	 * compare file based on their modification time
+	 * @param o1 the first element we compare
+	 * @param o2 the second element we compare
+	 */
 	public int compare(FileElement o1, FileElement o2) {
 		// TODO Auto-generated method stub
 		checkData(o1, o2);

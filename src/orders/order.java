@@ -1,17 +1,22 @@
 package orders;
 
-import commands.Command;
+
 import java.util.Comparator;
 import fileManager.FileElement;
-public abstract class order implements Command, Comparator<FileElement> {
+public abstract class order implements Comparator<FileElement> {
 
-	public String[] runCommand(String[] filenames) {
-		return null;
-		// TODO Auto-generated method stub
+	
 
-	}
-
+	/**
+	 * insert the data for the comparision to the file element,
+	 * so we will do it only once per object
+	 */
+	 
 	abstract protected void insertData(FileElement fe);
+	
+	/**
+	 * Check if we need to add the dat to the elemtn
+	 */
 	protected void checkData (FileElement fe1, FileElement fe2)
 	{
 		if (fe1.getData() == null)

@@ -11,7 +11,12 @@ public class SizeOrder  extends AbsOrder {
 		File f = new File (fe.getFileName());
 		fe.setData(new Long(f.length()));
 	}
-	@Override
+
+	/**
+	 * compare file based on their size
+	 * @param o1 the first element we compare
+	 * @param o2 the second element we compare
+	 */
 	public int compare(FileElement o1, FileElement o2) {
 		// TODO Auto-generated method stub
 		checkData(o1, o2);

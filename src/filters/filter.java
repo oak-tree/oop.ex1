@@ -3,7 +3,7 @@ import commands.*;
 import java.io.File;
 import java.util.ArrayList;
 
-public abstract class filter implements  Command {
+public abstract class filter {
 	
 	
 	private boolean _isNegativeFilter;
@@ -12,6 +12,12 @@ public abstract class filter implements  Command {
 	{
 		_isNegativeFilter = false;
 	}
+	/**
+	 *  Construct a filter
+	 * @param params the params of the filter. NOT means that we look at
+	 * all the files that dont pass the filter
+	 */
+	
 	public filter(ArrayList<String> params)
 	{
 		_isNegativeFilter = false;
@@ -24,12 +30,9 @@ public abstract class filter implements  Command {
 			}
 		}
 	}
-	public String[] runCommand(String[] filenames) {
-		return null;
-		// TODO Auto-generated method stub
-
-	}
-	
+	/**
+	 * return the result. filps between true/false if needed
+	 */
 	protected boolean returnResult(boolean res)
 	{
 		if (_isNegativeFilter)
@@ -41,6 +44,12 @@ public abstract class filter implements  Command {
 			return res;
 		}
 	}
+	
+	/**
+	 * checks if the file is filtered
+	 * @param f the file we filter
+	 * @return whether the file is filtered
+	 */
 	abstract public boolean isFileFilterd(File f);
 	
 	

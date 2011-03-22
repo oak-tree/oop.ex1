@@ -3,7 +3,11 @@ import java.io.File;
 import java.util.List;
 import java.util.Iterator;
 
-import commands.Command;
+/**
+ * 
+ * And/Or of several filters
+ *
+ */
 public abstract class BinaryOperatorFilter extends filter {
 
 
@@ -11,13 +15,24 @@ public abstract class BinaryOperatorFilter extends filter {
 	abstract protected boolean binaryOperator(boolean b1, boolean b2); 
 	protected boolean _defaultValue;
 
-	
+	/**
+	 * Construct a filter from a list of filters
+	 * @param filterList the filters list
+	 */
 	public BinaryOperatorFilter(List<filter> filterList)
 	{
 		_filterList = filterList;
 	}
+	
+	/**
+	 * Checks if the file is filtered
+	 *  
+	 */
 	public boolean isFileFilterd(File f)
+	
 	{
+		// initialize the res to default value and run
+		// until res is changed
 		boolean res = _defaultValue;
 		for (Iterator<filter>i1 = _filterList.iterator(); i1.hasNext() ;)
 		{

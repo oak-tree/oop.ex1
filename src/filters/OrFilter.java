@@ -2,8 +2,13 @@ package filters;
 
 import java.util.List;
 
-import commands.Command;
 
+
+/**
+ * 
+ * or-operator of several filters
+ *
+ */
 public class OrFilter extends BinaryOperatorFilter {
 
 
@@ -11,6 +16,10 @@ public class OrFilter extends BinaryOperatorFilter {
 	{
 		super(filterList);
 	}
+	
+	/**
+	 * the binary operation is or
+	 */
 	protected boolean binaryOperator(boolean b1, boolean b2) {
 		// TODO Auto-generated method stub
 		return b1 || b2;

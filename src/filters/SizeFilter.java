@@ -5,7 +5,12 @@ import java.util.ArrayList;
 
 import myFileScriptExceptions.*;
 
-public abstract class SizeFilter   extends filter {
+/**
+ * 
+ * a filter based on the size of the file
+ *
+ */
+public abstract class SizeFilter extends filter {
 
 	int _size; 
 	
@@ -20,7 +25,12 @@ public abstract class SizeFilter   extends filter {
 			throw new ParsingException(e.getMessage());
 		}
 	}
-	
+	/**
+	 * compare the size of  the file to a given size
+	 * @param paramSize the given size
+	 * @param fileSize the file size
+	 * @return whether the file is filtered
+	 */
 	abstract protected boolean isSizeValid(long paramSize, long fileSize);
 	
 	public boolean isFileFilterd(File f)
