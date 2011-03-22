@@ -177,7 +177,7 @@ public class MyFileScriptParser {
 		currentLineType = whatKindOfLineIsIt(getFirstWord(currentLine));
 		returnInfo retInfo = null;
 		
-		while ((scn.hasNext()) || (scriptEnd)) {
+		while ((scn.hasNext()) &&(scriptEnd==false)) {
 
 			
 
