@@ -56,10 +56,6 @@ public class FileManager {
 		_dirName = dirName;
 		
 		_allFiles = getAllFiles(dir);
-		for (Iterator<String>i1 = _allFiles.iterator(); i1.hasNext() ;)
-		{
-			System.out.println(i1.next());
-		}
 		DefaultComparator df = new DefaultComparator();
 		_tree = new TreeSet<FileElement> (df);
 		
@@ -79,7 +75,7 @@ public class FileManager {
 			/* after replacing the comparator the data for 
 			 * comparison needs to be changed
 			 */
-			FileElement el = i1.next();
+			FileElement el = new FileElement(i1.next());
 			el.setData(null);
 			newTree.add(el);
 		}

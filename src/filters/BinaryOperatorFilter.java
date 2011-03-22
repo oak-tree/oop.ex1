@@ -29,9 +29,9 @@ public abstract class BinaryOperatorFilter extends filter {
 			// and if we found true in the OR we can stop.
 			if (res != _defaultValue)
 			{
-				return res;
+				return returnResult(res);
 			}
 		}
-		return res;
+		return returnResult(res);
 	}
 }

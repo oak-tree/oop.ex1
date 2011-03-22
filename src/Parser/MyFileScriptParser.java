@@ -23,6 +23,7 @@ import myFileScriptExceptions.LastCommandException;
 import myFileScriptExceptions.ParsingException;
 import myFileScriptExceptions.ScriptException;
 import myFileScriptExceptions.SectionNameException;
+import myFileScriptExceptions.UnkownFilterException;
 
 import filescript.Script;
 import filters.AndFilter;
@@ -378,9 +379,21 @@ public class MyFileScriptParser {
 		for (i = 0; i < wordsInLine.length; i++) {
 
 			params = getObjectParam(wordsInLine[i]);
+<<<<<<< HEAD
 
 			filterList.add(FilterFactory.filterFactory(params[0],
 					getFilterParam(params)));
+=======
+				try {
+					filterList.add(FilterFactory.filterFactory(params[0],getFilterParam(params)));
+				} catch (UnkownFilterException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (BadParametersException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+>>>>>>> a69aeafbf8e9df1bd398637f2b8df5220a205a2f
 
 		} // for
 		return filterList;

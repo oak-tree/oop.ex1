@@ -1,0 +1,22 @@
+package orders;
+
+import java.util.Comparator;
+
+
+
+public class AbsComparator implements Comparator<String>{
+
+<<<<<<< HEAD
+	private String _fileName;
+	private Comparable _data;
+	@Override
+	public int compare(String arg0, String arg1) {
+=======
+
+	@Override
+	public int compare(String o1, String o2) {
+>>>>>>> c85660ecf6062171651265e94e73a9669a82d929
+		// TODO Auto-generated method stub
+		return 0;
+	}  
+}

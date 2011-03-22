@@ -20,7 +20,7 @@ public class CopyAction extends Action {
 			outFileDir.mkdirs();
 		}
 		
-		File outFile = new File (_dirName + f.getName());
+		File outFile = new File (_dirName + File.separator + f.getName());
 		try
 		{
 			InputStream in = new FileInputStream(f);

@@ -11,10 +11,12 @@ public abstract class DateFilter extends filter {
 	
 	public DateFilter(ArrayList<String> param)
 	{
-		
+		super(param);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		try {
-		_comparisonDate = sdf.parse(param.get(0));
+			String d = param.get(0);
+			_comparisonDate = sdf.parse(param.get(0));
+			param.remove(0);
 		}
 		catch (ParseException e)
 		{
@@ -26,7 +28,7 @@ public abstract class DateFilter extends filter {
 	
 	public boolean isFileFilterd(File f)
 	{
-		return isDateValid(_comparisonDate, new Date(f.lastModified()));
+		return returnResult(isDateValid(_comparisonDate, new Date(f.lastModified())));
 	}
 
 

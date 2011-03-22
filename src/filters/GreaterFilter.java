@@ -12,7 +12,7 @@ public class GreaterFilter extends SizeFilter  {
 
 	protected boolean isSizeValid(long paramSize, long fileSize)
 	{
-		return paramSize > fileSize;
+		return paramSize < fileSize;
 	}
 
 

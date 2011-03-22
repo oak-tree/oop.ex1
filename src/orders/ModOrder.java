@@ -4,7 +4,7 @@ import java.io.File;
 
 import fileManager.FileElement;
 
-public class ModOrder  extends order {
+public class ModOrder  extends AbsOrder {
 
 	protected void insertData(FileElement fe)
 	{
@@ -15,7 +15,12 @@ public class ModOrder  extends order {
 	public int compare(FileElement o1, FileElement o2) {
 		// TODO Auto-generated method stub
 		checkData(o1, o2);
-		return ((Long) o1.getData()).compareTo((Long) (o2.getData())); 
+		int res = ((Long) o1.getData()).compareTo((Long) (o2.getData()));
+		if (res == 0)
+		{
+			return super.compare(o1, o2);
+		}
+		return res;
 	}
 
 

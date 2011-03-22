@@ -1,4 +1,5 @@
 package filters;
+import java.lang.reflect.Constructor;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -30,12 +31,14 @@ public abstract class FilterFactory {
 				put("WRITEABLE", WriteableFilter.class);
 				put("EXECUTABLE", ExecutableFilter.class);
 
+
 			} catch (Exception e) {
 				throw new RuntimeException("unknown error", e);
 			}
 
 		}
 	};
+
 
 	/**
 	 * /** The function is a factory to create filters. the function receive the
