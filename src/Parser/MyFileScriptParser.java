@@ -270,13 +270,13 @@ public class MyFileScriptParser {
 					break;
 				} else {
 					orderString = currentLine;
-					System.out.println(currentLine);
+				
 
 				}
 			}// while
 		}
 		
-		System.out.println("parseOrder - end");
+	
 		return OrderFactory.orderFactory(orderString.trim());
 
 	}
