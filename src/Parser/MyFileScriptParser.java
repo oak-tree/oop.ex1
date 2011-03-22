@@ -87,6 +87,8 @@ public class MyFileScriptParser {
 
 	private int whatKindOfLineIsIt(String firstWord) {
 
+		firstWord=firstWord.trim();
+		
 		if (firstWord.length() == 0)
 			return LINE_TYPE_EMPTY_LINE;
 
@@ -231,7 +233,7 @@ public class MyFileScriptParser {
 		} // while
 
 		// TODO if order is empty
-		System.out.println("b-createnewscript");
+
 		if ((lastBlock==LINE_TYPE_ACTION) || (lastBlock==LINE_TYPE_ORDER))
 			return createNewScript(thisAction, thisFilter, thisOrder);
 		else
@@ -240,7 +242,7 @@ public class MyFileScriptParser {
 	}
 
 	private order parseOrder(Scanner scn) {
-		System.out.println("parseOrder - begin");
+	
 		/*
 		 * get first word. check if its one of the saved`s words insert it to
 		 * factory. if there are more words error will raise later in code
@@ -257,7 +259,7 @@ public class MyFileScriptParser {
 			currentLine = scn.next();
 			currentLineType = whatKindOfLineIsIt(currentLine);
 			if ((currentLineType != LINE_TYPE_COMMENT)
-					|| (currentLineType != LINE_TYPE_EMPTY_LINE)) {
+					&& (currentLineType != LINE_TYPE_EMPTY_LINE)) {
 				if (foundNextWord) {
 					break;
 				}
@@ -265,22 +267,23 @@ public class MyFileScriptParser {
 				if (currentLineType < LINE_TYPE_OTHER) {
 
 					orderString = DEFAULT_ORDER;
-
+					break;
 				} else {
 					orderString = currentLine;
-					System.out.println(currentLine);
+				
 
 				}
 			}// while
 		}
-		System.out.println("parseOrder - end");
-		return OrderFactory.orderFactory(orderString);
+		
+	
+		return OrderFactory.orderFactory(orderString.trim());
 
 	}
 
 	private SectionAction praseAction(Scanner scn) {
 
-		System.out.println("praseAction - Begin");
+	
 
 		String currentLine;
 		List<Action> actionList = new ArrayList<Action>();
@@ -299,11 +302,11 @@ public class MyFileScriptParser {
 			currentLine = scn.next();
 			currentLineType = whatKindOfLineIsIt(currentLine);
 			if ((currentLineType != LINE_TYPE_COMMENT)
-					|| (currentLineType != LINE_TYPE_EMPTY_LINE)) {
+					&& (currentLineType != LINE_TYPE_EMPTY_LINE)) {
 				if (currentLineType < LINE_TYPE_OTHER)
 					break; // found next block
 				else {
-					System.out.println(currentLine);
+			
 					params = getObjectParam(currentLine);
 
 					if (params.length > 2) {
@@ -312,10 +315,10 @@ public class MyFileScriptParser {
 					}
 
 					else if (params.length == 2) {
-						param = params[1];
+						param = params[1].trim();
 					}
 
-					Action newAction = ActionFactory.actionFactory(params[0],
+					Action newAction = ActionFactory.actionFactory(params[0].trim(),
 							param);
 					actionList.add(newAction);
 
@@ -326,7 +329,7 @@ public class MyFileScriptParser {
 			}
 
 		}// while
-		System.out.println("praseAction - end");
+
 		return new SectionAction(actionList);
 
 	}
@@ -339,24 +342,24 @@ public class MyFileScriptParser {
 
 		List<filter> filterList = new ArrayList<filter>();
 
-		System.out.println("praseFilter - Begin");
+	
 		String currentLine;
 
 		// int lineType = NO_MORE_LINES;
 		// still search by line
 		while (scn.hasNext()) {
 			currentLine = scn.next();
-			System.out.println(currentLine);
+	
 			currentLineType = whatKindOfLineIsIt(currentLine);
 			if ((currentLineType != LINE_TYPE_COMMENT)
-					|| (currentLineType != LINE_TYPE_EMPTY_LINE)) {
+					&& (currentLineType != LINE_TYPE_EMPTY_LINE)) {
 				if (currentLineType < LINE_TYPE_OTHER)
 					break; // found new section
 				else
 					filterList.add(new OrFilter(parseFilterLine(currentLine)));
 			}
 		}
-		System.out.println("praseFilter - end");
+		
 
 		// TODO think on emtpy list. should take care of this as well
 		// TODO if buffer is empty do something
@@ -372,7 +375,7 @@ public class MyFileScriptParser {
 	private List<filter> parseFilterLine(String Line) {
 
 		List<filter> filterList = new ArrayList<filter>();
-		String[] wordsInLine = Line.split(" ");
+		String[] wordsInLine = Line.split("\\s");
 
 		String[] params;
 		int i;
@@ -381,7 +384,7 @@ public class MyFileScriptParser {
 			params = getObjectParam(wordsInLine[i]);
 
 				try {
-					filterList.add(FilterFactory.filterFactory(params[0],getFilterParam(params)));
+					filterList.add(FilterFactory.filterFactory(params[0].trim(),getFilterParam(params)));
 				} catch (UnkownFilterException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -405,7 +408,7 @@ public class MyFileScriptParser {
 		ArrayList<String> filterParams = new ArrayList<String>();
 		int i;
 		for (i = 1; i < params.length; i++) {
-			filterParams.add(params[i]);
+			filterParams.add(params[i].trim());
 		}
 
 		return filterParams;
