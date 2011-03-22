@@ -241,7 +241,12 @@ public class MyFileScriptParser {
 		} // while
 
 		// TODO if order is empty
-		return createNewScript(thisAction, thisFilter, thisOrder);
+		System.out.println("b-createnewscript");
+		if (scriptEnd)
+			return createNewScript(thisAction, thisFilter, thisOrder);
+		else
+			return null;
+		
 	}
 
 	private order parseOrder(Scanner scn) throws ParsingException,
@@ -400,7 +405,7 @@ public class MyFileScriptParser {
 		
 		ArrayList<String> filterParams = new ArrayList<String>();
 		int i;
-		for (i = 0; i < params.length; i++) {
+		for (i = 1; i < params.length; i++) {
 			filterParams.add(params[i]);
 		}
 	
@@ -434,9 +439,11 @@ public class MyFileScriptParser {
 		
 		// make sure scanner check for new line and not new words
 		scn.useDelimiter(System.getProperty("line.separator"));
-
+		Script thisScript=null;
 		while (scn.hasNext()) {
-			scripts.add(parseScript(scn));
+			thisScript=parseScript(scn);
+			if (thisScript!=null)
+				scripts.add(thisScript);
 		}
 
 		return scripts;
