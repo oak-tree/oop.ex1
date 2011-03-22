@@ -43,6 +43,10 @@ public static void main(String[] args) throws ParsingException, IllegalArgumentE
 				MyFileScriptParser scriptParser = new MyFileScriptParser();
 				
 				List<Script> scripts = scriptParser.parseFile(args[1]);
+				if (scripts.size() == 0)
+				{
+					quit();
+				}
 				FileManager fm = new FileManager(args[0]);
 				
 				Script script;
