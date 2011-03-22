@@ -41,8 +41,6 @@ public static void main(String[] args) throws ParsingException, IllegalArgumentE
 			try {
 
 				MyFileScriptParser scriptParser = new MyFileScriptParser();
-				//List<Script> scripts = 	scriptParser.parseFile("testfiles/test.txt");
-				//FileManager fm = new FileManager("testfiles/");
 				
 				List<Script> scripts = scriptParser.parseFile(args[1]);
 				FileManager fm = new FileManager(args[0]);

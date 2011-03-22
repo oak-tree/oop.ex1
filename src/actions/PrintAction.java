@@ -57,7 +57,7 @@ public class PrintAction extends Action {
 	
 	private String getWritePermission(File f)
 	{
-		if (f.canExecute())
+		if (f.canWrite())
 		{
 			return _writePermission;
 		}
