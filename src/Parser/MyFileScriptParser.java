@@ -18,7 +18,14 @@ import orders.OrderFactory;
 import orders.order; //import filters.FilterFactory;
 //import filters.GreaterFilter;
 
+import myFileScriptExceptions.BadOrderException;
+import myFileScriptExceptions.BadParametersException;
+import myFileScriptExceptions.EmptyActionException;
+import myFileScriptExceptions.LastCommandException;
 import myFileScriptExceptions.ParsingException;
+import myFileScriptExceptions.ScriptException;
+import myFileScriptExceptions.SectionNameException;
+import myFileScriptExceptions.UnkownFilterException;
 
 import filescript.Script;
 import filters.AndFilter;
@@ -104,36 +111,24 @@ public class MyFileScriptParser {
 	/**
 	 * creates script for act,flt and ord act and flt must not be null. if
 	 * ord=null. creates default order
-	 * 
-	 * @param act
-	 * @param flt
-	 * @param ord
+	 *
+	 * @param act the SectionAction of this script 
+	 * @param flt the the filter of this ction 
+	 * @param ord the order of this script.
 	 * @return Script
-	 * @throws InvocationTargetException
-	 * @throws IllegalAccessException
-	 * @throws InstantiationException
-	 * @throws SecurityException
-	 * @throws IllegalArgumentException
-	 * @throws ParsingException
-	 * @throws InvocationTargetException
-	 * @throws IllegalAccessException
-	 * @throws InstantiationException
-	 * @throws SecurityException
-	 * @throws IllegalArgumentException
-	 * @throws ParsingException
+	 * 
+	 * @throws ScriptException if action or filter doesnt exist
 	 */
 	private Script createNewScript(Action act, filter flt, order ord)
-			throws ParsingException, IllegalArgumentException,
-			SecurityException, InstantiationException, IllegalAccessException,
-			InvocationTargetException {
+	throws ScriptException{
 
 		if ((act == null) || (flt == null)) {
-			throw new ParsingException("Error");
+			throw new ScriptException("action and order must be in script");
 		}
 
-		if (ord == null) {
+		/*if (ord == null) {
 			ord = OrderFactory.orderFactory(DEFAULT_ORDER);
-		}
+		}*/
 		return new Script(act, flt, ord);
 
 	}
@@ -147,10 +142,8 @@ public class MyFileScriptParser {
 	 */
 	private final int NEW_SCRIPT = -1;
 
-	private Script parseScript(Scanner scn) throws ParsingException,
-			IllegalArgumentException, SecurityException,
-			InstantiationException, IllegalAccessException,
-			InvocationTargetException {
+	private Script parseScript(Scanner scn)
+	throws BadOrderException,EmptyActionException,SectionNameException {
 
 		String currentLine;
 		int lastBlock = NEW_SCRIPT;
@@ -202,12 +195,14 @@ public class MyFileScriptParser {
 					if (lastBlock == LINE_TYPE_FILTER) {
 						thisAction =praseAction(scn);
 						if (thisAction.isEmpty()) {
-							throw new ParsingException("Error");
+							throw new EmptyActionException("action section" +
+									" must have at least one command");
 						}
 
 						lastBlock = LINE_TYPE_ACTION;
 					} else {
-						throw new ParsingException("Error");
+						throw new BadOrderException("ACTION must" +
+								" come after FILTER");
 					}
 
 					break;
@@ -227,27 +222,30 @@ public class MyFileScriptParser {
 						thisOrder =parseOrder(scn);
 						scriptEnd = true;
 					} else {
-						throw new ParsingException("Error");
+						throw new BadOrderException("ORDER must" +
+						" come after ACTION");
 					}
 
 					break;
 
 				default:
 
-					throw new ParsingException("Error");
+					throw new SectionNameException("unkown section name");
 				}
 				
 						
 		} // while
 
 		// TODO if order is empty
-		return createNewScript(thisAction, thisFilter, thisOrder);
+		System.out.println("b-createnewscript");
+		if (scriptEnd)
+			return createNewScript(thisAction, thisFilter, thisOrder);
+		else
+			return null;
+		
 	}
 
-	private order parseOrder(Scanner scn) throws ParsingException,
-			IllegalArgumentException, SecurityException,
-			InstantiationException, IllegalAccessException,
-			InvocationTargetException {
+	private order parseOrder(Scanner scn)  {
 		System.out.println("parseOrder - begin");
 		/*
 		 * get first word. check if its one of the saved`s words insert it to
@@ -287,10 +285,7 @@ public class MyFileScriptParser {
 	
 	}
 
-	private SectionAction praseAction(Scanner scn) throws ParsingException,
-			IllegalArgumentException, SecurityException,
-			InstantiationException, IllegalAccessException,
-			InvocationTargetException {
+	private SectionAction praseAction(Scanner scn)  {
 
 		System.out.println("praseAction - Begin");
 
@@ -306,7 +301,7 @@ public class MyFileScriptParser {
 			if (allowMoreCommand == false) {
 				// this means last command was
 				// "MOVE REMOVE - dont allow more commands"
-				throw new ParsingException("bla");
+				throw new LastCommandException("cannot have more command here");
 			}
 			currentLine = scn.next();
 			currentLineType = whatKindOfLineIsIt(currentLine);
@@ -319,7 +314,8 @@ public class MyFileScriptParser {
 						params = getObjectParam(currentLine);
 				 
 						if (params.length>2){
-								throw new ParsingException("Error");
+								throw new BadParametersException
+								("action can have only one parameter");
 						}
 						
 						else if (params.length==2) {
@@ -343,10 +339,7 @@ public class MyFileScriptParser {
 
 	}
 
-	private filter praseFilter(Scanner scn) throws ParsingException,
-			IllegalArgumentException, SecurityException,
-			InstantiationException, IllegalAccessException,
-			InvocationTargetException {
+	private filter praseFilter(Scanner scn) {
 
 		List<filter> filterList = new ArrayList<filter>();
 
@@ -374,10 +367,7 @@ public class MyFileScriptParser {
 
 	}
 
-	private List<filter> parseFilterLine(String Line) throws ParsingException,
-			IllegalArgumentException, SecurityException,
-			InstantiationException, IllegalAccessException,
-			InvocationTargetException {
+	private List<filter> parseFilterLine(String Line)  {
 
 		List<filter> filterList = new ArrayList<filter>();
 		String[] wordsInLine = Line.split(" ");
@@ -388,7 +378,15 @@ public class MyFileScriptParser {
 
 
 			params = getObjectParam(wordsInLine[i]);
-				filterList.add(FilterFactory.filterFactory(params[0],getFilterParam(params)));
+				try {
+					filterList.add(FilterFactory.filterFactory(params[0],getFilterParam(params)));
+				} catch (UnkownFilterException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (BadParametersException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 		} // for
 		return filterList;
@@ -412,17 +410,9 @@ public class MyFileScriptParser {
 	 * 
 	 * @param fileBuffer
 	 * @return List. all scripts that have been found
-	 * @throws InvocationTargetException
-	 * @throws IllegalAccessException
-	 * @throws InstantiationException
-	 * @throws SecurityException
-	 * @throws IllegalArgumentException
-	 * @throws ParsingException
 	 */
 	private List<Script> scanForScriptsInBuffer(String fileBuffer)
-			throws ParsingException, IllegalArgumentException,
-			SecurityException, InstantiationException, IllegalAccessException,
-			InvocationTargetException {
+			 {
 
 		List<Script> scripts = new ArrayList<Script>();
 
@@ -433,9 +423,11 @@ public class MyFileScriptParser {
 		
 		// make sure scanner check for new line and not new words
 		scn.useDelimiter(System.getProperty("line.separator"));
-
+		Script thisScript=null;
 		while (scn.hasNext()) {
-			scripts.add(parseScript(scn));
+			thisScript=parseScript(scn);
+			if (thisScript!=null)
+				scripts.add(thisScript);
 		}
 
 		return scripts;
@@ -447,18 +439,10 @@ public class MyFileScriptParser {
 	 * 
 	 * @param fileString
 	 * @return List. all scripts that found in file
-	 * @throws ParsingException
-	 * @throws IOException
-	 * @throws InvocationTargetException
-	 * @throws IllegalAccessException
-	 * @throws InstantiationException
-	 * @throws SecurityException
-	 * @throws IllegalArgumentException
+	 * @throws IOException - happens if cannot read file  
+	 * 
 	 */
-	public List<Script> parseFile(String fileString) throws ParsingException,
-			IOException, IllegalArgumentException, SecurityException,
-			InstantiationException, IllegalAccessException,
-			InvocationTargetException {
+	public List<Script> parseFile(String fileString) throws IOException,ParsingException  {
 
 		String fileBuffer = fileFunctions.readFileAsString(fileString);
 		return scanForScriptsInBuffer(fileBuffer);
