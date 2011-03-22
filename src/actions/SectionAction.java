@@ -8,6 +8,13 @@ import java.util.List;
 public class SectionAction extends Action {
 
 	List <Action> _actionsList;
+	
+	public boolean isEmpty(){
+		if (_actionsList.size()>0)
+			return false;
+			else
+				return true;
+	}
 	public SectionAction(List <Action> l)
 	{
 		_actionsList = l;
