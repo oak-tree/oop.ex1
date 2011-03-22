@@ -15,6 +15,7 @@ public class MyFileScript {
 		//check if filename is legal? maybe dont need a check here;
 		return true;
 	}
+	
 	/**
 	 * @param args
 	 * @throws InvocationTargetException 
@@ -28,27 +29,17 @@ public class MyFileScript {
 	public static void main(String[] args) throws ParsingException, IllegalArgumentException, SecurityException, IOException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		// TODO Auto-generated method stub
 		
-<<<<<<< HEAD
+
 		MyFileScriptParser scriptParser = new MyFileScriptParser();
 		scriptParser.parseFile("testfiles/test.txt");
-		/*
-=======
-		
->>>>>>> a69aeafbf8e9df1bd398637f2b8df5220a205a2f
-		
-		System.out.println("----welcome screen----");
-	//	if (validation(args)==true) { 
-			
-			//scriptParser.parseFile(args[0]);
+
 			try {
-<<<<<<< HEAD
-			
-=======
-				List<Script> scripts = scriptParser.parseFile("testfiles/test.txt");
-				FileManager fm = new FileManager("C:\\Users\\ami\\Documents\\srefat");
+
+				List<Script> scripts = scriptParser.parseFile(args[2]);
+				FileManager fm = new FileManager(args[1]);
 				Script script = scripts.remove(0);
 				script.runScript(fm);
->>>>>>> a69aeafbf8e9df1bd398637f2b8df5220a205a2f
+
 			} catch (ParsingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -63,8 +54,7 @@ public class MyFileScript {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	
-		
+
 		
 		
 		
