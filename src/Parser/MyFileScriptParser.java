@@ -51,23 +51,10 @@ public class MyFileScriptParser {
 	private String[] getObjectParam(String buffer) {
 		String[] currentWord;
 
-		currentWord = buffer.split("_");
-		if (currentWord.length > 2) {
-			throw new ParsingException("Error");
-		} else {
-
-			String[] returnValue = new String[2];
-
-			returnValue[0] = currentWord[0];
-			if (currentWord.length == 1)
-				returnValue[1] = null;
-			else
-				returnValue[1] = currentWord[1];
-
-			return returnValue;
+		return buffer.split("_");
+	
 		}
 
-	}
 
 	/**
 	 * gets first word in line - used for checking what kind of section is it
@@ -268,7 +255,7 @@ public class MyFileScriptParser {
 		 * get first word. check if its one of the saved`s words insert it to
 		 * factory. if there are more words error will raise later in code
 		 */
-		System.out.println("parseOrder - end");
+
 
 		String currentLine = scn.next();
 		int lineType = NO_MORE_LINES;
@@ -290,6 +277,7 @@ public class MyFileScriptParser {
 				}
 			}// while
 
+		System.out.println("parseOrder - end");
 		return new returnInfo(OrderFactory.orderFactory(currentLine), lineType);
 	}
 	
@@ -300,11 +288,12 @@ public class MyFileScriptParser {
 			InstantiationException, IllegalAccessException,
 			InvocationTargetException {
 
-		System.out.println("Filter - Begin");
+		System.out.println("praseAction - Begin");
 
 		String currentLine;
 		List<Action> actionList = new ArrayList<Action>();
 		String[] params;
+		String param = null;
 		int lineType = NO_MORE_LINES;
 		boolean allowMoreCommand = true;
 
@@ -322,19 +311,30 @@ public class MyFileScriptParser {
 					break; // found next block
 				else
 				{
-					System.out.println(currentLine);
-				params = getObjectParam(currentLine);
-				Action newAction = ActionFactory.actionFactory(params[0],
-						params[1]);
-				actionList.add(newAction);
+						System.out.println(currentLine);
+						params = getObjectParam(currentLine);
+				 
+						if (params.length>2){
+								throw new ParsingException("Error");
+						}
+						
+						else if (params.length==2) {
+							param=params[1];
+						}
+			
+						Action newAction = ActionFactory.actionFactory(params[0],
+						param);
+						actionList.add(newAction);
 				
-				if (newAction.isLastCommand()) {
+						
+					if (newAction.isLastCommand()) {
 					allowMoreCommand = false;
-				}
+					}
 				}
 			}
 
 		}// while
+		System.out.println("praseAction - end");
 		return new returnInfo(new SectionAction(actionList), lineType);
 
 	}
@@ -346,7 +346,7 @@ public class MyFileScriptParser {
 
 		List<filter> filterList = new ArrayList<filter>();
 
-		System.out.println("Filter - Begin");
+		System.out.println("praseFilter - Begin");
 		String currentLine;
 
 		int lineType = NO_MORE_LINES;
@@ -362,7 +362,7 @@ public class MyFileScriptParser {
 					filterList.add(new OrFilter(parseFilterLine(currentLine)));
 			}
 		}
-		System.out.println("Filter - end");
+		System.out.println("praseFilter - end");
 
 		// TODO think on emtpy list. should take care of this as well
 		// TODO if buffer is empty do something
@@ -377,15 +377,31 @@ public class MyFileScriptParser {
 
 		List<filter> filterList = new ArrayList<filter>();
 		String[] wordsInLine = Line.split(" ");
+	
 		String[] params;
 		int i;
 		for (i = 0; i < wordsInLine.length; i++) {
 
+
 			params = getObjectParam(wordsInLine[i]);
-			filterList.add(FilterFactory.filterFactory(params[0], params[1]));
+			
+			filterList.add(FilterFactory.filterFactory(params[0],getFilterParam(params)));
 
 		} // for
 		return filterList;
+	}
+
+	private ArrayList<String> getFilterParam(String[] params) {
+		// 
+		
+		ArrayList<String> filterParams = new ArrayList<String>();
+		int i;
+		for (i = 0; i < params.length; i++) {
+			filterParams.add(params[i]);
+		}
+	
+		
+		return filterParams;
 	}
 
 	/**
