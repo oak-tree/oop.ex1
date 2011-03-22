@@ -1,3 +1,166 @@
+<<<<<<< .mine
+FILTER
+% 10
+ACTION
+% 9
+PRINT
+% 8
+FILTER
+% 7
+ACTION
+% 6
+COPY_a/
+% 5
+FILTER
+% 4
+SMALLER_1
+ACTION
+MOVE_b/
+FILTER
+GREATER_1
+SMALLER_100
+ACTION
+MOVE_c/
+FILTER
+% 3
+% 2
+% 1
+% ... we have liftoff!
+ACTION
+READ_Y
+% engines roaring: printing files modified before date
+FILTER
+BEFORE_2011/02/02
+ACTION
+PRINT
+% phase 1 completed: printing files modified after date
+FILTER
+AFTER_2011/02/02
+ACTION
+PRINT
+% detaching front vessel: printing files greater than 200 bytes
+FILTER
+GREATER_200
+ACTION
+PRINT
+FILTER
+% leaving atmosphere: printing files of zero length
+SMALLER_1
+ACTION
+PRINT
+% hovering in space: printing all files (* filter)
+FILTER
+FILE_*
+ACTION
+PRINT
+% realizing you're all alone: printing readable files
+FILTER
+READABLE_Y
+ACTION
+PRINT
+% major tom to ground control: printing writable files
+FILTER
+WRITABLE_Y
+ACTION
+PRINT
+% take your protein pills: printing executable files
+FILTER
+EXECUTABLE_Y
+ACTION
+PRINT
+FILTER
+% and put your helmet on: printing non-readable files
+READABLE_N
+ACTION
+PRINT
+FILTER
+% this is ground control to major tom: printing non-writable files
+WRITABLE_N
+ACTION
+PRINT
+% you've really made the grade: printing non-executable files
+FILTER
+EXECUTABLE_N
+ACTION
+PRINT
+% and the papers want to know whose shirts you wear: printing files NOT modified before date
+FILTER
+BEFORE_2011/02/02_NOT
+ACTION
+PRINT
+% ein, ein al david bowie: printing files NOT modified after date
+FILTER
+AFTER_2011/02/02_NOT
+ACTION
+PRINT
+% atem adayim korim et ze? printing files NOT greater than 200 bytes
+FILTER
+GREATER_200_NOT
+ACTION
+PRINT
+% eize yom sameach li hayom. printing files NOT of zero length
+FILTER
+SMALLER_1_NOT
+ACTION
+PRINT
+% purim, ve-hithapasti le-oop. printing all files (* filter)
+FILTER
+FILE_*
+ACTION
+PRINT
+% oop i did it again. printing NOT readable files
+FILTER
+READABLE_Y_NOT
+ACTION
+PRINT
+% there are so many tests... printing NOT writable files
+FILTER
+WRITABLE_Y_NOT
+ACTION
+PRINT
+% ...who knew that there are so many things to test. printing NOT executable files
+FILTER
+EXECUTABLE_Y_NOT
+ACTION
+PRINT
+FILTER
+% planet earth is blue. printing NOT non-readable files
+READABLE_N_NOT
+ACTION
+PRINT
+FILTER
+% and there's nothing i can do. printing NOT non-writable files
+WRITABLE_N_NOT
+ACTION
+PRINT
+% do you have a life? printing NOT non-executable files
+FILTER
+EXECUTABLE_N_NOT
+ACTION
+PRINT
+% no, i have oop. trying multiple filters
+FILTER
+WRITABLE_Y
+READABLE_N
+GREATER_200
+ACTION
+PRINT
+% let's go... discoteque! trying multiple actions
+FILTER
+WRITABLE_Y
+READABLE_N
+GREATER_200
+ACTION
+EXEC_Y
+READ_Y
+WRITE_Y
+EXEC_N
+READ_N
+WRITE_N
+WRITE_Y
+READ_N
+PRINT
+=======
 FILTER
 % 10
 ACTION
@@ -159,3 +322,4 @@ WRITE_N
 WRITE_Y
 READ_N
 PRINT
+>>>>>>> .r17
