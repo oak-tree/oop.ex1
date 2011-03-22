@@ -63,9 +63,12 @@ public abstract  class FilterFactory {
 	    public static filter filterFactory(String filter , String param) 
 	    throws ParsingException, IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException {
 	        if (!FILTER_TABLE.containsKey(filter)) {
-	           //TODO //throw new UnsupportedFilterException();
+	        	throw new ParsingException ("bla");
+	        	//TODO //throw new UnsupportedFilterException();
 	        }
-	    //TODO add try and catch and throw some exepction    
+	        System.out.println("Filter Factory");
+	    //TODO 
+	            
 	            return (filter) (FILTER_TABLE.get(filter).
 	                    getConstructors()[0].newInstance(param));
 	        	       

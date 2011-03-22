@@ -55,7 +55,10 @@ public abstract  class OrderFactory  {
 	     * @throws SecurityException 
 	     * @throws IllegalArgumentException 
 	     * @throws InvalidFilterParameterException if the filter parameters ware wrong
-	     * @throws UnsupportedFilterException if the filter name is not defined
+	     * @throws UnsupportedFilterExK,V>
+
+java.lang.Object
+ception if the filter name is not defined
 	     */
 	    public static order orderFactory(String order) 
 	    throws ParsingException, IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException {

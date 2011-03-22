@@ -1,8 +1,10 @@
 package filescript;
 import actions.Action;
+import actions.SectionAction;
 import filters.filter;
 import orders.order;
 import fileManager.*;
+import myFileScriptExceptions.*;
 
 public class Script {
 	private Action _actionCommand;
@@ -18,7 +20,7 @@ public class Script {
 	
 	public void runScript(FileManager fm)
 	{
-		
+
 	}
 	
 	
