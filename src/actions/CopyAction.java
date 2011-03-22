@@ -5,13 +5,15 @@ import java.io.*;
 public class CopyAction extends Action {
 
 	private String _dirName;
+	static final int BUFSIZE = 1024;
 	public CopyAction(String param){
 		_dirName = param;
 	}
 
 	
-	protected void performAction(File f)
+	public void performAction(File f)
 	{
+		
 		File outFileDir = new File (_dirName);
 		if (!outFileDir.exists())
 		{
@@ -23,7 +25,7 @@ public class CopyAction extends Action {
 		{
 			InputStream in = new FileInputStream(f);
 			OutputStream out = new FileOutputStream(outFile);
-			byte[] buf = new byte[1024];
+			byte[] buf = new byte[BUFSIZE];
 		    int len;
 		    while ((len = in.read(buf)) > 0){
 		        out.write(buf, 0, len);

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import myFileScriptExceptions.ParsingException;
+import fileManager.*;
 public class MyFileScript {
 
 	private static boolean validation(String[] args){
@@ -19,9 +20,7 @@ public class MyFileScript {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		
-		//FilePermission fp = new FilePermission("C:\\Users\\ami\\My Documents\\bla.txt","");
-	//	System.out.println(wildCardMatch("amiamiami", "ami*ami"));
+		/*
 		
 		System.out.println("----welcome screen----");
 	//	if (validation(args)==true) { 
@@ -52,7 +51,8 @@ public class MyFileScript {
 				e.printStackTrace();
 			}
 		//}
-		
+		*/
+		FileManager fm = new FileManager("C:\\Users\\ami\\Documents");
 	}
 
 }

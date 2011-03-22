@@ -9,7 +9,7 @@ public class MoveAction extends Action {
 		_dirName = param;
 	}
 
-	protected void performAction(File f)
+	public void performAction(File f)
 	{
 		File outFileDir = new File (_dirName);
 		if (!outFileDir.exists())

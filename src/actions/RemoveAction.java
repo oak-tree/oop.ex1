@@ -8,7 +8,7 @@ public class RemoveAction extends Action {
 	
 	}
 
-	protected void performAction(File f)
+	public void performAction(File f)
 	{
 		f.delete();
 	}

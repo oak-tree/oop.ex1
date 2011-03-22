@@ -14,7 +14,7 @@ public class PrintAction extends Action {
 	
 	}
 	
-	protected void performAction(File f)
+	public void performAction(File f)
 	{
 		System.out.println(getReadPermission(f) +
 						   getWritePermission(f) + 

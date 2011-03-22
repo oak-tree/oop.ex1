@@ -16,6 +16,6 @@ public abstract class Action implements Command {
 
 	}
 	
-	abstract protected void performAction(File f);
+	abstract public void performAction(File f);
 	
 }
