@@ -31,7 +31,12 @@ public class Script {
 			if (_filterCommand.isFileFilterd(f))
 			{
 				_actionCommand.performAction(f);
+				if(_actionCommand.isActionRequireReset())
+				{
+					fm.reset();
+				}
 			}
+		
 		}
 
 	}

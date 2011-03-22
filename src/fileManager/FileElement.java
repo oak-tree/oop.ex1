@@ -1,7 +1,5 @@
 package fileManager;
 
-import java.util.Comparator;
-
 public class FileElement{
 	private String _fileName;
 	private Object _data;

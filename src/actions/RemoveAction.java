@@ -15,4 +15,8 @@ public class RemoveAction extends Action {
 	public boolean isItLastAction(){
 		return true;
 	}
+	public boolean isActionRequireReset()
+	{
+		return true;
+	}
 }

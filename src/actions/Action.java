@@ -17,5 +17,9 @@ public abstract class Action implements Command {
 	}
 	
 	abstract public void performAction(File f);
-	
+
+	public boolean isActionRequireReset()
+	{
+		return false;
+	}
 }

@@ -23,4 +23,9 @@ public class MoveAction extends Action {
 	public boolean isItLastAction(){
 		return true;
 	}
+	
+	public boolean isActionRequireReset()
+	{
+		return true;
+	}
 }

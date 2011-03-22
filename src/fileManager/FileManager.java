@@ -13,6 +13,8 @@ public class FileManager {
 	
 	public void reset()
 	{
+		File dir = new File(_dirName);
+		_allFiles = getAllFiles(dir);
 		for (Iterator <String> i1 = _allFiles.iterator(); i1.hasNext() ;)
 		{
 			String st = i1.next();
@@ -24,7 +26,7 @@ public class FileManager {
 	
 	private ArrayList<String> getAllFiles(File f)
 	{
-		ArrayList<String> filesList = new ArrayList();
+		ArrayList<String> filesList = new ArrayList<String>();
 		File[] flist = f.listFiles();
 		if (flist == null)
 		{
@@ -52,10 +54,10 @@ public class FileManager {
 	}
 	public FileManager (String dirName)
 	{
-		File dir = new File(dirName);
+		
 		_dirName = dirName;
 		
-		_allFiles = getAllFiles(dir);
+		
 		DefaultComparator df = new DefaultComparator();
 		_tree = new TreeSet<FileElement> (df);
 		
@@ -67,7 +69,10 @@ public class FileManager {
 	// sort the
 	public void ChangeComparator(Comparator<FileElement> newCom)
 	{
-		
+		if (newCom == null)
+		{
+			newCom = new DefaultComparator();
+		}
 		TreeSet <FileElement> newTree = new TreeSet<FileElement> (newCom);
 		for (Iterator <FileElement>i1 = _tree.iterator(); i1.hasNext() ;)
 		{

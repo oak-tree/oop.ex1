@@ -28,5 +28,17 @@ public class SectionAction extends Action {
 		}
 
 	}
+	public boolean isActionRequireReset()
+	{
+		for (Iterator <Action>i1 = _actionsList.iterator(); i1.hasNext() ;)
+		{
+			Action act = i1.next();
+			if (act.isActionRequireReset())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
 }
