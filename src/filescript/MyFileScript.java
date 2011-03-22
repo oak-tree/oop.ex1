@@ -1,16 +1,24 @@
 package filescript;
 import Parser.*;
+
+import java.util.Iterator;
 import java.util.List;
 
-import java.io.FilePermission;
+//import java.io.FilePermission;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+
+import actions.Action;
+
+//import actions.Action;
 
 import myFileScriptExceptions.ParsingException;
 import fileManager.*;
 public class MyFileScript {
 
-	private static boolean validation(String[] args){
+private static boolean validation(String[] args){
+	//	if 
+		
 		//check here if user enter file name
 		//check if filename is legal? maybe dont need a check here;
 		return true;
@@ -26,19 +34,34 @@ public class MyFileScript {
 	 * @throws IllegalArgumentException 
 	 * @throws ParsingException 
 	 */
-	public static void main(String[] args) throws ParsingException, IllegalArgumentException, SecurityException, IOException, InstantiationException, IllegalAccessException, InvocationTargetException {
+public static void main(String[] args) throws ParsingException, IllegalArgumentException, SecurityException, IOException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		// TODO Auto-generated method stub
 		
 
-		MyFileScriptParser scriptParser = new MyFileScriptParser();
-		scriptParser.parseFile("testfiles/test.txt");
 
 			try {
 
-				List<Script> scripts = scriptParser.parseFile(args[2]);
-				FileManager fm = new FileManager(args[1]);
-				Script script = scripts.remove(0);
-				script.runScript(fm);
+				MyFileScriptParser scriptParser = new MyFileScriptParser();
+				//List<Script> scripts = 	scriptParser.parseFile("testfiles/test.txt");
+				//FileManager fm = new FileManager("testfiles/");
+				System.out.println(args[1]);
+				List<Script> scripts = scriptParser.parseFile(args[1]);
+				FileManager fm = new FileManager(args[0]);
+				System.out.println(scripts.size());
+				Script script;
+				for (Iterator <Script>i1 = scripts.iterator(); i1.hasNext() ;)
+				{
+					script =  i1.next();
+					script.runScript(fm);
+					
+				}
+
+
+
+
+
+				
+				
 
 			} catch (ParsingException e) {
 				// TODO Auto-generated catch block

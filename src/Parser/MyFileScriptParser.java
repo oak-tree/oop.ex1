@@ -277,7 +277,7 @@ public class MyFileScriptParser {
 		}
 		
 		System.out.println("parseOrder - end");
-		return OrderFactory.orderFactory(orderString);
+		return OrderFactory.orderFactory(orderString.trim());
 
 	}
 
@@ -315,10 +315,10 @@ public class MyFileScriptParser {
 					}
 
 					else if (params.length == 2) {
-						param = params[1];
+						param = params[1].trim();
 					}
 
-					Action newAction = ActionFactory.actionFactory(params[0],
+					Action newAction = ActionFactory.actionFactory(params[0].trim(),
 							param);
 					actionList.add(newAction);
 
@@ -384,7 +384,7 @@ public class MyFileScriptParser {
 			params = getObjectParam(wordsInLine[i]);
 
 				try {
-					filterList.add(FilterFactory.filterFactory(params[0],getFilterParam(params)));
+					filterList.add(FilterFactory.filterFactory(params[0].trim(),getFilterParam(params)));
 				} catch (UnkownFilterException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -408,7 +408,7 @@ public class MyFileScriptParser {
 		ArrayList<String> filterParams = new ArrayList<String>();
 		int i;
 		for (i = 1; i < params.length; i++) {
-			filterParams.add(params[i]);
+			filterParams.add(params[i].trim());
 		}
 
 		return filterParams;
