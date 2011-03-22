@@ -1,6 +1,7 @@
 package actions;
 
 import java.io.*;
+import myFileScriptExceptions.RunException;
 /**
  * 
  * This action copies files to a new destination
@@ -38,12 +39,11 @@ public class CopyAction extends Action {
 		    in.close();
 		    out.close();
 		}
-		catch(FileNotFoundException ex){
-			System.out.println(ex.getMessage() + " in the specified directory.");
-		    System.exit(0);
+		catch(FileNotFoundException e){
+			throw new RunException(e.getMessage());
 		}
 		catch(IOException e){
-		    System.out.println(e.getMessage());      
+			throw new RunException(e.getMessage());   
 		}
 		
 	}

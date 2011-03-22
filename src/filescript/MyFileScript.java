@@ -59,7 +59,7 @@ public static void main(String[] args) throws ParsingException, IllegalArgumentE
 			} 
 			catch (RunException e) {
 				
-				
+				quit();
 			} 
 			
 
