@@ -56,17 +56,8 @@ public static void main(String[] args) throws ParsingException, IllegalArgumentE
 			} catch (ParsingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} 
-			catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 
 		
 		

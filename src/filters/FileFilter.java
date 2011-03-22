@@ -24,6 +24,11 @@ public class FileFilter extends filter {
 	    // split by the * symbol
 	    String [] strings = pattern.split("\\*");
         
+	    if (strings.length == 0)
+	    {
+	    	return true;
+	    }
+	    
 	    // checks to see that the name begins with the first part of the pattern
 	    if(!text.startsWith(strings[0]))
 	    {
