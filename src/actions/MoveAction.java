@@ -19,4 +19,8 @@ public class MoveAction extends Action {
 		File outFile = new File (_dirName + f.getName());
 		f.renameTo(outFile);
 	}
+	
+	public boolean isItLastAction(){
+		return true;
+	}
 }
