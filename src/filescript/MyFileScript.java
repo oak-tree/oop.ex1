@@ -44,10 +44,10 @@ public static void main(String[] args) throws ParsingException, IllegalArgumentE
 				MyFileScriptParser scriptParser = new MyFileScriptParser();
 				//List<Script> scripts = 	scriptParser.parseFile("testfiles/test.txt");
 				//FileManager fm = new FileManager("testfiles/");
-				System.out.println(args[1]);
+				
 				List<Script> scripts = scriptParser.parseFile(args[1]);
 				FileManager fm = new FileManager(args[0]);
-				System.out.println(scripts.size());
+				
 				Script script;
 				for (Iterator <Script>i1 = scripts.iterator(); i1.hasNext() ;)
 				{

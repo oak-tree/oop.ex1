@@ -66,8 +66,7 @@ public abstract  class ActionFactory {
 	     */
 	    public static Action actionFactory(String action , String param) 
 	    throws BadParametersException ,UnkownActionException {
-	        System.out.println("--------------");
-	        System.out.println(action);
+	       
 	    	if (!ACTION_TABLE.containsKey(action)) {
 	        	
 	         throw new UnkownActionException("unkown action");

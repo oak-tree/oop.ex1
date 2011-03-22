@@ -8,9 +8,7 @@ public class AfterFilter  extends DateFilter  {
 
 	public AfterFilter(ArrayList<String> param){
 		super(param);
-		System.out.println("hello from after filter");
-		//System.out.println(param);
-		System.out.println("goodbye from after filter");
+		
 	}
 
 	

@@ -233,7 +233,7 @@ public class MyFileScriptParser {
 		} // while
 
 		// TODO if order is empty
-		System.out.println("b-createnewscript");
+
 		if ((lastBlock==LINE_TYPE_ACTION) || (lastBlock==LINE_TYPE_ORDER))
 			return createNewScript(thisAction, thisFilter, thisOrder);
 		else
@@ -242,7 +242,7 @@ public class MyFileScriptParser {
 	}
 
 	private order parseOrder(Scanner scn) {
-		System.out.println("parseOrder - begin");
+	
 		/*
 		 * get first word. check if its one of the saved`s words insert it to
 		 * factory. if there are more words error will raise later in code
@@ -283,7 +283,7 @@ public class MyFileScriptParser {
 
 	private SectionAction praseAction(Scanner scn) {
 
-		System.out.println("praseAction - Begin");
+	
 
 		String currentLine;
 		List<Action> actionList = new ArrayList<Action>();
@@ -306,7 +306,7 @@ public class MyFileScriptParser {
 				if (currentLineType < LINE_TYPE_OTHER)
 					break; // found next block
 				else {
-					System.out.println(currentLine);
+			
 					params = getObjectParam(currentLine);
 
 					if (params.length > 2) {
@@ -329,7 +329,7 @@ public class MyFileScriptParser {
 			}
 
 		}// while
-		System.out.println("praseAction - end");
+
 		return new SectionAction(actionList);
 
 	}
@@ -342,14 +342,14 @@ public class MyFileScriptParser {
 
 		List<filter> filterList = new ArrayList<filter>();
 
-		System.out.println("praseFilter - Begin");
+	
 		String currentLine;
 
 		// int lineType = NO_MORE_LINES;
 		// still search by line
 		while (scn.hasNext()) {
 			currentLine = scn.next();
-			System.out.println(currentLine);
+	
 			currentLineType = whatKindOfLineIsIt(currentLine);
 			if ((currentLineType != LINE_TYPE_COMMENT)
 					&& (currentLineType != LINE_TYPE_EMPTY_LINE)) {
@@ -359,7 +359,7 @@ public class MyFileScriptParser {
 					filterList.add(new OrFilter(parseFilterLine(currentLine)));
 			}
 		}
-		System.out.println("praseFilter - end");
+		
 
 		// TODO think on emtpy list. should take care of this as well
 		// TODO if buffer is empty do something
